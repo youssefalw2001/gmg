@@ -1,0 +1,7 @@
+[
+  {
+    "endpoint": "/account/user_info",
+    "type": "reflected",
+    "vector": "query_params"
+  }
+]
