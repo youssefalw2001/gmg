@@ -1,0 +1,488 @@
+{
+  "timestamp": "2026-07-12T16:20:54Z",
+  "target_user_id": "e3d85f59-c105-4043-a060-9a6f10e79ef7",
+  "our_user_id": "8a4c3d63-88fa-46cc-984a-e885d4afd1b5",
+  "total_mutations": 53,
+  "successes": 0,
+  "baseline_success": true,
+  "results": [
+    {
+      "name": "alg_none_none",
+      "description": "Set alg=none, empty signature, target user_id=e3d85f59",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_None",
+      "description": "Set alg=None, empty signature, target user_id=e3d85f59",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_NONE",
+      "description": "Set alg=NONE, empty signature, target user_id=e3d85f59",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJOT05FIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_nOnE",
+      "description": "Set alg=nOnE, empty signature, target user_id=e3d85f59",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJuT25FIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_NoNe",
+      "description": "Set alg=NoNe, empty signature, target user_id=e3d85f59",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJOb05lIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_none_self",
+      "description": "Set alg=none, empty sig, OUR user_id (baseline test)",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "alg_none_None_self",
+      "description": "Set alg=None, empty sig, OUR user_id (baseline test)",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp7"
+    },
+    {
+      "name": "empty_signature",
+      "description": "Original header.payload with empty third segment",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "missing_signature_segment",
+      "description": "Only header.payload, no dot, no signature",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "truncated_signature",
+      "description": "Signature truncated to half length",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs256_confusion_raw_ec_point",
+      "description": "ES256\u2192HS256 confusion, secret=raw_ec_point, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs256_confusion_pem_pubkey",
+      "description": "ES256\u2192HS256 confusion, secret=pem_pubkey, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs256_confusion_x_coord_only",
+      "description": "ES256\u2192HS256 confusion, secret=x_coord_only, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs256_confusion_y_coord_only",
+      "description": "ES256\u2192HS256 confusion, secret=y_coord_only, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs256_confusion_x_concat_y",
+      "description": "ES256\u2192HS256 confusion, secret=x_concat_y, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs384_confusion_raw",
+      "description": "ES256\u2192HS384 confusion with raw pubkey, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "hs512_confusion_raw",
+      "description": "ES256\u2192HS512 confusion with raw pubkey, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_secret",
+      "description": "HS256 with weak secret 'secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_password",
+      "description": "HS256 with weak secret 'password', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_123456",
+      "description": "HS256 with weak secret '123456', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn",
+      "description": "HS256 with weak secret 'gmgn', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn.ai",
+      "description": "HS256 with weak secret 'gmgn.ai', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn_secret",
+      "description": "HS256 with weak secret 'gmgn_secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn_signer",
+      "description": "HS256 with weak secret 'gmgn_signer', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_signer",
+      "description": "HS256 with weak secret 'signer', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_jwt_secret",
+      "description": "HS256 with weak secret 'jwt_secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_your-256-bit-secret",
+      "description": "HS256 with weak secret 'your-256-bit-secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_HS256-secret",
+      "description": "HS256 with weak secret 'HS256-secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_empty",
+      "description": "HS256 with weak secret '', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_key",
+      "description": "HS256 with weak secret 'key', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_test",
+      "description": "HS256 with weak secret 'test', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_default",
+      "description": "HS256 with weak secret 'default', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_changeme",
+      "description": "HS256 with weak secret 'changeme', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_admin",
+      "description": "HS256 with weak secret 'admin', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_supersecret",
+      "description": "HS256 with weak secret 'supersecret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn.ai/signer",
+      "description": "HS256 with weak secret 'gmgn.ai/signer', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn.ai/access",
+      "description": "HS256 with weak secret 'gmgn.ai/access', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_gmgn.ai/refresh",
+      "description": "HS256 with weak secret 'gmgn.ai/refresh', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_access_token_secret",
+      "description": "HS256 with weak secret 'access_token_secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "weak_secret_refresh_token_secret",
+      "description": "HS256 with weak secret 'refresh_token_secret', target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "kid_injection_file_devnull",
+      "description": "kid='/dev/null', empty signature, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii9kZXYvbnVsbCJ9.eyJhdWQiOiJnbWduLmF"
+    },
+    {
+      "name": "kid_injection_traversal_devnull",
+      "description": "kid='../../dev/null', empty signature, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii4uLy4uL2Rldi9udWxsIn0.eyJhdWQiOiJn"
+    },
+    {
+      "name": "kid_injection_empty_kid",
+      "description": "kid='', empty signature, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IiJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2g"
+    },
+    {
+      "name": "kid_injection_deep_traversal",
+      "description": "kid='../../../../../../dev/null', empty signature, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii4uLy4uLy4uLy4uLy4uLy4uL2Rldi9udWxs"
+    },
+    {
+      "name": "kid_injection_url_empty",
+      "description": "kid='https://attacker.com/empty.key', empty signature, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imh0dHBzOi8vYXR0YWNrZXIuY29tL2VtcHR5"
+    },
+    {
+      "name": "kid_injection_sqli_kid",
+      "description": "kid=\"' OR '1'='1\", empty signature, target user",
+      "status": 403,
+      "code": "N/A",
+      "message": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IicgT1IgJzEnPScxIn0.eyJhdWQiOiJnbWdu"
+    },
+    {
+      "name": "kid_hs256_empty_devnull",
+      "description": "kid='/dev/null' + HS256 + empty secret, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii9kZXYvbnVsbCJ9.eyJhdWQiOiJnbWduLmF"
+    },
+    {
+      "name": "kid_hs256_empty_empty",
+      "description": "kid='' + HS256 + empty secret, target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IiJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2g"
+    },
+    {
+      "name": "jku_swap",
+      "description": "jku header pointing to attacker JWKS, original sig",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImprdSI6Imh0dHBzOi8vYXR0YWNrZXIuY29tLy53ZWxs"
+    },
+    {
+      "name": "user_id_swap_keep_sig",
+      "description": "Change user_id in payload, keep original signature (test sig binding)",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "exp_bump_keep_sig",
+      "description": "Extend exp to 2286, our user_id, keep original sig",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    },
+    {
+      "name": "embedded_jwk_hs256",
+      "description": "Embedded JWK in header (attacker's HS256 key), target user",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImp3ayI6eyJrdHkiOiJvY3QiLCJrIjoiWVhSMFlXTnJa"
+    },
+    {
+      "name": "cross_token_sig",
+      "description": "Access token's signature on forged refresh payload",
+      "status": 400,
+      "code": -16202,
+      "message": "refresh access token fail !",
+      "success": false,
+      "token_preview": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnbWduLmFpL3JlZnJlc2giLCJkYXRhIjp"
+    }
+  ],
+  "successful_mutations": []
+}
