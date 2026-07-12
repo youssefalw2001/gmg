@@ -1,0 +1,12 @@
+[
+  {
+    "endpoint": "dividend_info",
+    "field": "from_address",
+    "payload": "{{7*7}}"
+  },
+  {
+    "endpoint": "dividend_info",
+    "field": "from_address",
+    "payload": "{{config}}"
+  }
+]

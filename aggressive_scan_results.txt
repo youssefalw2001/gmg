@@ -1,0 +1,73 @@
+================================================================================
+🦊 AGGRESSIVE XSS SCANNER - BRUTE FORCE MODE
+================================================================================
+
+[TESTING] /api/v1/user/update
+  Status: 404 | Not found
+
+[TESTING] /api/v2/user/update
+  Status: 404 | Not found
+
+[TESTING] /account/user/update
+  Status: 404 | Not found
+
+[TESTING] /account/update
+  Status: 404 | Not found
+
+[TESTING] /account/profile/update
+  Status: 404 | Not found
+
+[TESTING] /account/settings
+  Status: 404 | Not found
+
+[TESTING] /xapi/v1/user/update
+  Status: 404 | Not found
+
+[TESTING] /account/wallet/update
+  Status: 404 | Not found
+
+[TESTING] /account/wallet/add
+  Status: 404 | Not found
+
+[TESTING] /api/v1/wallet/update
+  Status: 404 | Not found
+
+[TESTING] /xapi/v1/wallet/update
+  Status: 404 | Not found
+
+[TESTING] /api/v1/token/note
+  Status: 404 | Not found
+
+[TESTING] /api/v1/note/create
+  Status: 404 | Not found
+
+[TESTING] /xapi/v1/token/note
+  Status: 404 | Not found
+
+[TESTING] /api/v1/watchlist/create
+  Status: 404 | Not found
+
+[TESTING] /xapi/v1/watchlist/create
+  Status: 404 | Not found
+
+[TESTING] /api/v1/portfolio/create
+  Status: 404 | Not found
+
+[TESTING] /account/settings/update
+  Status: 404 | Not found
+
+[TESTING] /api/v1/settings/update
+  Status: 404 | Not found
+
+================================================================================
+🎯 ENDPOINTS THAT ACCEPT INPUT:
+================================================================================
+
+❌ No working endpoints found
+
+💡 The endpoints either:
+  1. Have different paths than we guessed
+  2. Require different authentication
+  3. Are only accessible via browser
+
+================================================================================
