@@ -1,0 +1,50 @@
+llm:
+  provider: ollama
+  model: qwen2.5-coder:32b
+  base_url: http://localhost:11434
+  temperature: 0.2
+  max_tokens: 4096
+
+groq:
+  enabled: false
+  model: llama-3.3-70b-versatile
+  api_key_env: GROQ_API_KEY
+
+anthropic:
+  enabled: false
+  model: claude-opus-4-8
+  api_key_env: ANTHROPIC_API_KEY
+
+embeddings:
+  provider: ollama
+  model: nomic-embed-text
+  dimensions: 768
+
+memory:
+  db_path: ./data/agent.db
+  episodic_ttl_days: 30
+
+target:
+  name: "my-platform-staging"
+  base_url: "https://staging.example.internal"
+  auth_type: "bearer"
+  actors:
+    - id: "user_a"
+      token_env: "USER_A_TOKEN"
+      tenant_id: "tenant_1"
+    - id: "user_b"
+      token_env: "USER_B_TOKEN"
+      tenant_id: "tenant_2"
+
+safety:
+  rate_limit_rps: 5
+  max_requests_per_task: 300
+  max_loop_iterations: 40
+  passive_only: true
+  allow_hosts:
+    - "staging.example.internal"
+
+logging:
+  level: INFO
+  json: true
+  path: ./data/agent.log

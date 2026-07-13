@@ -1,0 +1,41 @@
+services:
+  ollama:
+    image: ollama/ollama:0.4.2
+    volumes:
+      - ollama_models:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  agent:
+    build: .
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      USER_A_TOKEN: ${USER_A_TOKEN}
+      USER_B_TOKEN: ${USER_B_TOKEN}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    volumes:
+      - ./data:/workspace/data
+      - ./config.yaml:/workspace/config.yaml:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - agent_net
+
+networks:
+  agent_net:
+    driver: bridge
+
+volumes:
+  ollama_models:
