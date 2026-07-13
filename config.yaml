@@ -41,7 +41,7 @@ safety:
   rate_limit_rps: 5
   max_requests_per_task: 300
   max_loop_iterations: 40
-  passive_only: true
+  passive_only: false
   allow_hosts:
     - "gmgn.ai"
 

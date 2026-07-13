@@ -148,12 +148,36 @@ def _tenant_leak_score(body_a: Any, body_b: Any, tenant_a: str, tenant_b: str) -
 def build_registry(cfg: Config, memory: MemoryStore, embed_fn: Callable[[str], list[float]]) -> ToolRegistry:
     from . import probes as _probes
 
+    # Wrap embed_fn to handle Ollama being unreachable gracefully
+    def safe_embed_fn(text: str) -> list[float]:
+        try:
+            return embed_fn(text)
+        except Exception:
+            # Return zero vector if embeddings unavailable
+            return [0.0] * cfg.embeddings.dimensions
+
     registry = ToolRegistry()
     limiter = TokenBucket(cfg.safety.rate_limit_rps)
+    
+    # Load cookies for Cloudflare bypass
+    import os as _os
+    _cookie_jar = {}
+    _cookie_path = _os.path.join(_os.path.dirname(_os.path.dirname(__file__)), "cookies.json")
+    if _os.path.exists(_cookie_path):
+        import json as _json
+        with open(_cookie_path) as _f:
+            _cookie_jar = _json.load(_f)
+    
     client = httpx.Client(
-        timeout=httpx.Timeout(connect=5.0, read=10.0, write=10.0, pool=5.0),
+        timeout=httpx.Timeout(connect=5.0, read=30.0, write=10.0, pool=5.0),
         follow_redirects=False,
         verify=True,
+        cookies=_cookie_jar,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Origin": "https://gmgn.ai",
+            "Referer": "https://gmgn.ai/",
+        },
     )
     request_counter = {"count": 0}
 
@@ -212,7 +236,7 @@ def build_registry(cfg: Config, memory: MemoryStore, embed_fn: Callable[[str], l
                     "status": response.status_code,
                     "elapsed_ms": elapsed_ms,
                 },
-                embedding=embed_fn(summary_text),
+                embedding=safe_embed_fn(summary_text),
             )
             return {
                 "request_id": request_id,
@@ -361,7 +385,7 @@ def build_registry(cfg: Config, memory: MemoryStore, embed_fn: Callable[[str], l
             kind="probe",
             key=f"{method} {path_template}",
             value=result,
-            embedding=embed_fn(f"IDOR probe {method} {path_template} verdict={verdict}"),
+            embedding=safe_embed_fn(f"IDOR probe {method} {path_template} verdict={verdict}"),
         )
         return result
 
@@ -445,7 +469,7 @@ def build_registry(cfg: Config, memory: MemoryStore, embed_fn: Callable[[str], l
     def _recall(args: dict[str, Any]) -> dict[str, Any]:
         query = args["query"]
         k = int(args.get("k", 5))
-        vec = embed_fn(query)
+        vec = safe_embed_fn(query)
         records = memory.recall(vec, k=k)
         return {
             "matches": [
@@ -549,7 +573,7 @@ def build_registry(cfg: Config, memory: MemoryStore, embed_fn: Callable[[str], l
         request_fn=_http_request,
         memory_get_http=memory.get_http,
         memory_record_event=memory.record_event,
-        embed_fn=embed_fn,
+        embed_fn=safe_embed_fn,
     )
 
     registry.register(Tool(

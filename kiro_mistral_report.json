@@ -1,0 +1,132 @@
+{
+  "timestamp": "2026-07-13T17:13:34.522464+00:00",
+  "findings": [
+    {
+      "type": "bot_wallet",
+      "endpoint": "/wallet-api/v1/get_whitelist_address",
+      "response": "{\"code\":0,\"message\":\"success\",\"data\":{\"address\":[]}}"
+    }
+  ],
+  "interesting": [
+    {
+      "usage": "transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "wallet_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "withdraw",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "export_key",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "export",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "send",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "wallet",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "fund_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "withdrawal",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "whitelist",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "set_whitelist",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "sign",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "sign_transaction",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "mfa_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "verify_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "approve_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "transaction",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "tx",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "txn",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "payment",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "send_token",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "wallet_withdraw",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "crypto_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    },
+    {
+      "usage": "asset_transfer",
+      "code": -109901,
+      "msg": "Key: 'TxnId' Error:Field validation for 'TxnId' failed on the 'required' tag\nKey: 'RequestId' Error:Field validation for 'RequestId' failed on the 'required' tag"
+    }
+  ]
+}
