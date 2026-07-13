@@ -88,7 +88,6 @@ class OllamaClient:
 class AnthropicClient:
     """Client for Anthropic's native Messages API. Supports Opus 4.8 and Sonnet 4.6."""
 
-    BASE_URL = "https://api.anthropic.com/v1"
     API_VERSION = "2023-06-01"
 
     def __init__(self, cfg: Config) -> None:
@@ -98,8 +97,12 @@ class AnthropicClient:
         self._model = cfg.anthropic.model
         self._temperature = cfg.llm.temperature
         self._max_tokens = cfg.llm.max_tokens
+        
+        # Support custom base_url (e.g., for Nara router)
+        base_url = getattr(cfg.anthropic, 'base_url', None) or "https://api.anthropic.com/v1"
+        
         self._client = httpx.Client(
-            base_url=self.BASE_URL,
+            base_url=base_url,
             headers={
                 "x-api-key": api_key,
                 "anthropic-version": self.API_VERSION,
@@ -202,7 +205,7 @@ class AnthropicClient:
 class GroqClient:
     """Fallback client for Groq's free tier. OpenAI-compatible API."""
 
-    BASE_URL = "https://api.groq.com/openai/v1"
+    BASE_URL = "https://router.bynara.id/v1"
 
     def __init__(self, cfg: Config) -> None:
         api_key = cfg.groq.api_key
