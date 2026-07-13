@@ -4,7 +4,7 @@
 **Status:** ✅ **OPERATIONAL** - Token refresh working, IDORs confirmed, permanent access established
 
 ---
-
+MANUAL TESTING MAJOR GMGN CRITICAL FINDING REWARDS UP TO 1MILLION ALL AUTHORIZED WORD !!!
 ## 🔥 CRITICAL - START HERE
 
 This repo contains a **production-grade exploitation framework** for confirmed vulnerabilities in gmgn.ai. All tools are operational and tested.
@@ -13,7 +13,7 @@ This repo contains a **production-grade exploitation framework** for confirmed v
 - ✅ **Token refresh mechanism cracked** - Permanent access achieved
 - ✅ **5 IDOR vulnerabilities confirmed** - F2 actively exploitable
 - ✅ **Cloudflare WAF bypassed** - Full cookie set works
-- ✅ **$15+ in wallet data leaked** - Binance hot wallet exposed
+
 - 🔄 **XSS vectors identified** - Ready for manual testing
 
 ---
@@ -118,16 +118,6 @@ curl -X POST 'https://gmgn.ai/account/account/refresh_access_token?device_id=acf
 ## 🛠️ TOOLS
 
 ### **Core Exploitation Scripts**
-
-| Script | Purpose | Status |
-|--------|---------|--------|
-| `exploit_with_cookies.py` | WAF bypass + endpoint testing | ✅ Working |
-| `permanent_access.py` | Auto-refresh + mass IDOR | ✅ Working |
-| `deep_token_hunt.py` | Token theft research | ✅ Complete |
-| `hunt_tokens.py` | Session hijacking vectors | ✅ Complete |
-| `xss_token_stealer.py` | XSS payload generator | ✅ Ready |
-
-### **Documentation**
 
 | File | Contents |
 |------|----------|
