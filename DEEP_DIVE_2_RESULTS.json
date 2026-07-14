@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-07-14T20:34:40.730555+00:00",
+  "findings": [
+    {
+      "severity": "HIGH",
+      "category": "OAUTH_LEAK",
+      "endpoint": "/api/v1/x/auth/start",
+      "detail": "OAuth URL/secrets exposed!",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'url': 'https://api.twitter.com/oauth/authorize?oauth_token=0obcXAAAAAABqKeBAAABn2JWXYo'}}",
+      "ts": "2026-07-14T20:34:15.194078+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "MFA_BYPASS",
+      "endpoint": "/wallet-api/v1/generate_mfa_params",
+      "detail": "Usage 'transfer' \u2192 NO verification! txn_id=37fd9bc0-b7c9-4b78-af70-d358a9fe23d8",
+      "data": "{'code': 0, 'message': 'success', 'data': {'txn_id': '37fd9bc0-b7c9-4b78-af70-d358a9fe23d8', 'verify_items': []}}",
+      "ts": "2026-07-14T20:34:15.769097+00:00"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "VIP_ESCALATION",
+      "endpoint": "/api/v1/user_apply_vip1",
+      "detail": "VIP apply endpoint accessible!",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'address': '00dae870-8490-4d19-bfc0-39ce49e906b5', 'vip_level': 0}}",
+      "ts": "2026-07-14T20:34:19.730411+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "REFERRAL_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "Whale wallet 0xb4f701538bf492dacb088d4d932ab105c127f89d registered under our referral!",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}",
+      "ts": "2026-07-14T20:34:22.795131+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "REFERRAL_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "Whale wallet 0xa7d4ffc4eca3c71af150ce302560a9d04a1d2b9f registered under our referral!",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}",
+      "ts": "2026-07-14T20:34:22.908805+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "REFERRAL_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "Whale wallet 0x085111103c78e708199e1779789eefe9529d5d3a registered under our referral!",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}",
+      "ts": "2026-07-14T20:34:23.021540+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "REFERRAL_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "SOL wallet 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1 registered under our referral!",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}",
+      "ts": "2026-07-14T20:34:23.130345+00:00"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "REFERRAL_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "SOL wallet JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4 registered under our referral!",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}",
+      "ts": "2026-07-14T20:34:23.236380+00:00"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "WEBSOCKET",
+      "endpoint": "/ws",
+      "detail": "WebSocket endpoint found! Status: 101",
+      "data": null,
+      "ts": "2026-07-14T20:34:23.532136+00:00"
+    }
+  ],
+  "bypass_txn_ids": {
+    "transfer": "37fd9bc0-b7c9-4b78-af70-d358a9fe23d8"
+  }
+}

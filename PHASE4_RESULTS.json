@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-07-14T20:40:35.417248+00:00",
+  "findings": [
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'auto_sign' set to 'true' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'mfa_enabled' set to 'false' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'whitelist_enabled' set to 'false' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'max_gas' set to '99999999999' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'slippage' set to '99' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'anti_mev' set to 'false' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'fee' set to '0' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'priority_fee' set to '999999999' on sol!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'gas_price' set to '999000000000' on bsc!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "CONFIG_CHANGE",
+      "endpoint": "/wallet-api/v1/wallet/set_configs",
+      "detail": "Config 'auto_approve' set to 'true' on bsc!",
+      "data": "{'code': 0, 'message': 'success', 'data': None}"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "CONFIG_DISCLOSURE",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "Wallet configs for sol: {\"anti_mev\": \"false\", \"auto_sign\": \"true\", \"fee\": \"0\", \"max_gas\": \"99999999999\", \"mfa_enabled\": \"false\", \"priority_fee\": \"999999999\", \"slippage\": \"99\", \"whitelist_enabled\": \"false\"}",
+      "data": "{'code': 0, 'message': 'success', 'data': {'count': 8, 'items': {'anti_mev': 'false', 'auto_sign': 'true', 'fee': '0', 'max_gas': '99999999999', 'mfa_enabled': 'false', 'priority_fee': '999999999', 'slippage': '99', 'whitelist_enabled': 'false'}}}"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "CONFIG_DISCLOSURE",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "Wallet configs for bsc: {\"auto_approve\": \"true\", \"custom_consolidate_wallet_open\": \"0\", \"custom_distribute_wallet_open\": \"0\", \"gas_price\": \"999000000000\", \"show_batch_transfer_in_panel\": \"0\", \"show_quick_select_in_panel\": \"1",
+      "data": "{'code': 0, 'message': 'success', 'data': {'count': 8, 'items': {'auto_approve': 'true', 'custom_consolidate_wallet_open': '0', 'custom_distribute_wallet_open': '0', 'gas_price': '999000000000', 'show_batch_transfer_in_panel': '0', 'show_quick_select_in_panel': '1', 'show_quick_select_in_trenches': '1', 'show_wallet_in_sidebar': '0'}}}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "USER_ENUM",
+      "endpoint": "/tapi/v1/fourmeme/invite_info",
+      "detail": "User ID 104044399 leaked for wallet 0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'referral_code': 'NN7R2SDZDFKS', 'invited_user_id': 104044399, 'invited_address': '0xa7d4ffc4eca3c71af150ce302560a9d04a1d2b9f', 'invited_user_name': '', 'invited_avatar': '', 'invited_code': '4B24F926D2YH', 'invite_count': 0, 'invite_rate': '0.1', 'rebate_rets': [{'symbol': 'BNB', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'CAKE', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'WHY', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'USDT', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'BNX', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'binancedog', 'amount': '0', 'amount_usd': ''}, {'symbol': 'BabyDoge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Koge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'LisUSD', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Thena', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'SHELL', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'USD1', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'FORM', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'ASTER', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'BNB_MPC', 'amount': '0', 'amount_usd': ''}, {'symbol': 'U', 'amount': '0', 'amount_usd': ''}, {'symbol': 'USDC', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'UUSD', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': '\u5e01\u5b89\u4eba\u751f', 'amount': '0', 'amount_usd': ''}, {'symbol': 'Broccoli714', 'amount': '0', 'amount_usd': ''}], 'total_amount_usd': '0.000000'}}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "USER_ENUM",
+      "endpoint": "/tapi/v1/fourmeme/invite_info",
+      "detail": "User ID 102073313 leaked for wallet 0x085111103c78e708199e1779789eefe9529d5d3a",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'referral_code': 'XKSY9WN72NVZ', 'invited_user_id': 102073313, 'invited_address': '0x3e9b65638b45c3eb73099ae4aa1f5ccfb16a6519', 'invited_user_name': '', 'invited_avatar': '', 'invited_code': 'R57N2GDKCN6S', 'invite_count': 2, 'invite_rate': '0.1', 'rebate_rets': [{'symbol': 'BNB', 'amount': '0.046702266994', 'amount_usd': '26.667462'}, {'symbol': 'CAKE', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'WHY', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'USDT', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'BNX', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'binancedog', 'amount': '0', 'amount_usd': ''}, {'symbol': 'BabyDoge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Koge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'LisUSD', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Thena', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'SHELL', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'USD1', 'amount': '1.806076654228', 'amount_usd': '1.804518'}, {'symbol': 'FORM', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'ASTER', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'BNB_MPC', 'amount': '0', 'amount_usd': ''}, {'symbol': 'U', 'amount': '0', 'amount_usd': ''}, {'symbol': 'USDC', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'UUSD', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': '\u5e01\u5b89\u4eba\u751f', 'amount': '0', 'amount_usd': ''}, {'symbol': 'Broccoli714', 'amount': '0', 'amount_usd': ''}], 'total_amount_usd': '28.471980'}}"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "WALLET_GROUPS",
+      "endpoint": "/wallet-api/v1/wallet/get_groups",
+      "detail": "Wallet groups for sol revealed!",
+      "data": "{'code': 0, 'message': 'success', 'data': {'count': 0, 'items': []}}"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "WALLET_GROUPS",
+      "endpoint": "/wallet-api/v1/wallet/get_groups",
+      "detail": "Wallet groups for bsc revealed!",
+      "data": "{'code': 0, 'message': 'success', 'data': {'count': 1, 'items': [{'name': 'U', 'sort': 5, 'visible': False, 'wallets': ['0x0a4a0836142fcf94ce100b6d7790c50786ffbcff']}]}}"
+    }
+  ]
+}

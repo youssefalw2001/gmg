@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-07-14T20:37:44.083258+00:00",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "category": "BATCH_IDOR",
+      "endpoint": "/tapi/v1/trading_bot/limit_order/mul_wallet_same_create",
+      "detail": "Batch order across multiple wallets succeeded!",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'success_list': None, 'failed_list': None}}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "FOURMEME_IDOR",
+      "endpoint": "/tapi/v1/fourmeme/invite_info",
+      "detail": "Fourmeme endpoint accessible for wallet 0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'referral_code': 'NN7R2SDZDFKS', 'invited_user_id': 104044399, 'invited_address': '0xa7d4ffc4eca3c71af150ce302560a9d04a1d2b9f', 'invited_user_name': '', 'invited_avatar': '', 'invited_code': '4B24F926D2YH', 'invite_count': 0, 'invite_rate': '0.1', 'rebate_rets': [{'symbol': 'BNB', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'CAKE', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'WHY', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'USDT', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'BNX', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'binancedog', 'amount': '0', 'amount_usd': ''}, {'symbol': 'BabyDoge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Koge', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'LisUSD', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'Thena', 'amount': '0', 'amount_usd': '0.000000'}, {'symbol': 'SHELL', 'amount': '0', 'amount_usd': '0.000000'}, {'sym"
+    }
+  ]
+}
