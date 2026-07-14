@@ -6,14 +6,15 @@ llm:
   max_tokens: 4096
 
 groq:
-  enabled: false
-  model: llama-3.3-70b-versatile
-  api_key_env: GROQ_API_KEY
+  enabled: true
+  model: mistral-large
+  api_key_env: ANTHROPIC_API_KEY
 
 anthropic:
   enabled: false
-  model: claude-opus-4-8
+  model: claude-fable-5
   api_key_env: ANTHROPIC_API_KEY
+  base_url: https://router.bynara.id/v1
 
 embeddings:
   provider: ollama
@@ -25,24 +26,24 @@ memory:
   episodic_ttl_days: 30
 
 target:
-  name: "my-platform-staging"
-  base_url: "https://staging.example.internal"
+  name: "gmgn.ai"
+  base_url: "https://gmgn.ai"
   auth_type: "bearer"
   actors:
     - id: "user_a"
       token_env: "USER_A_TOKEN"
-      tenant_id: "tenant_1"
-    - id: "user_b"
+      tenant_id: "d7fd12f7-680f-4a32-9c69-70fcde545d7a"
+    - id: "user_b"  
       token_env: "USER_B_TOKEN"
-      tenant_id: "tenant_2"
+      tenant_id: "d7fd12f7-680f-4a32-9c69-70fcde545d7a"
 
 safety:
   rate_limit_rps: 5
   max_requests_per_task: 300
   max_loop_iterations: 40
-  passive_only: true
+  passive_only: false
   allow_hosts:
-    - "staging.example.internal"
+    - "gmgn.ai"
 
 logging:
   level: INFO

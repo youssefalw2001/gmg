@@ -1,0 +1,57 @@
+{
+  "new_findings_from_str8gold": {
+    "user_info_endpoint": {
+      "endpoint": "POST /account/user_info",
+      "auth_required": true,
+      "response_contains": [
+        "bot_bsc_address",
+        "bot_sol_address",
+        "bot_eth_address",
+        "bot_megaeth_address",
+        "bot_monad_address",
+        "email",
+        "user_id"
+      ],
+      "confirmed_data": {
+        "bot_bsc_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+        "bot_sol_address": "FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8",
+        "email": "jusef232@gmail.com"
+      }
+    },
+    "trade_token_secret_bypass": {
+      "endpoint": "POST /account/trade_token",
+      "vulnerability": "Secret field accepts ANY non-empty value - no real validation",
+      "blocker": "wallet_address validated against eth_address (empty for web users) not bot_*_address",
+      "impact": "If bind_wallet succeeds, trade_token gives MPC signing authority"
+    },
+    "bind_wallet_analysis": {
+      "endpoint": "POST /account/bind_wallet",
+      "status": "Reachable - needs correct usage txn_id",
+      "txn_id_usage_required": "bind_wallet or passkey_registration (verified)",
+      "transfer_txn_id_rejected": true,
+      "error": "txn transaction result fail (wrong usage or unverified)"
+    },
+    "verify_wallet_signature": {
+      "endpoint": "POST /account/mfa/txn/v1/verify_wallet_signature",
+      "status": "LIVE - validates txn_id usage field",
+      "error_on_wrong_usage": "invalid verify transaction, usage mismatch",
+      "implication": "Confirms txn_id has embedded usage that is checked"
+    }
+  },
+  "complete_attack_chain": {
+    "without_password": [
+      "1. TG spoof (client_id=gmgn_tg_bot, from_app=tg) \u2192 zero captcha",
+      "2. SRP salt extraction for any email \u2192 offline crack OR",
+      "3. XSS \u2192 steal token from localStorage (sid not httpOnly)",
+      "4. With token: POST /wallet-api/v1/generate_mfa_params {usage:transfer} \u2192 txn_id (NO MFA!)",
+      "5. POST /wallet-api/v1/transfer \u2192 drain funds"
+    ],
+    "severity": "CRITICAL",
+    "password_not_needed_because": [
+      "XSS steals token directly (no password needed)",
+      "SRP salt enables offline GPU cracking (not brute force)",
+      "Telegram accounts may have no password at all",
+      "Google-only accounts have no password"
+    ]
+  }
+}
