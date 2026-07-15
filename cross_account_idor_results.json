@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-07-15 20:28:31.530418",
+  "account_a_user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+  "account_a_wallet": "FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8",
+  "account_b_wallet": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep",
+  "results": {
+    "transfer": {
+      "success": false
+    },
+    "export_key": {
+      "success": false
+    },
+    "cashback": {
+      "success": true,
+      "status_code": "CB5003",
+      "message": "User Cashback Founds Insufficient"
+    },
+    "bind_wallet": {
+      "success": false
+    }
+  }
+}

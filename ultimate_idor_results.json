@@ -1,0 +1,106 @@
+[
+  {
+    "test": "Cashback Claim (VICTIM)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "reason": "",
+      "message": "success",
+      "data": {
+        "status_code": "CB5003",
+        "message": "User Cashback Founds Insufficient"
+      }
+    }
+  },
+  {
+    "test": "Register Wallet (VICTIM \u2192 OUR REFERRAL)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "msg": "success",
+      "data": {}
+    }
+  },
+  {
+    "test": "Dividend Info (VICTIM)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "reason": "",
+      "message": "success",
+      "data": {
+        "total_usdt_value": "0.000000",
+        "list": []
+      }
+    }
+  },
+  {
+    "test": "Solana Raw TX (VICTIM)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "reason": "",
+      "message": "success",
+      "data": {
+        "raw_tx": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMFuMUHOzXYhHfCJUVfFSw85nzBWvDOa8aZs9eVU25CZoFOPPjAn6MJXMRf72T6WLxL13KU/+0t8no8A7tWtk2t6wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArPE26wH8HE6IPSPItYRKtZo39mrdV8XprDtT4FnTXGQBVuD2k2Zaz0TbFWi/F1uqUYnLl/XS/ztlXSu2/W0YsHK8scjZgjNjhsx72CkkWwIeFAZNiyglAiIKB6qleVvUAQQFAAECAwQIFBZWe8Yc24Q=",
+        "last_valid_block_height": "411203290",
+        "recent_blockhash": "8itMsg9RpyuLjrbozoPfwH5Hr6eRxmtjA7XD1RuuuwwZ"
+      }
+    }
+  },
+  {
+    "test": "User Info (NO PAYLOAD - Baseline)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "message": "success",
+      "data": {
+        "data": {
+          "account_type_opened": [],
+          "accounts": [
+            {
+              "account": "jusef232@gmail.com",
+              "account_info_tag": "master",
+              "account_status": "confirmed",
+              "account_type": "email"
+            }
+          ],
+          "bot_base_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+          "bot_bsc_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+          "bot_eth_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+          "bot_megaeth_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+          "bot_monad_address": "0x0a4a0836142fcf94ce100b6d7790c50786ffbcff",
+          "bot_sol_address": "FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8",
+          "bot_tron_address": "TAWycDGVURtosnaP4PNeHsPnBQpHvj3RJs",
+          "create_time": 1758065731050,
+          "eth_address": "",
+          "from_app": "gmgn",
+          "has_bound_third": true,
+          "head_path": "",
+          "lang": "en-us",
+          "nickname": "",
+          "sol_address": "",
+          "status": "confirmed",
+          "tron_address": "",
+          "uid": "81018514",
+          "user_id": "00dae870-8490-4d19-bfc0-39ce49e906b5"
+        },
+        "done": true,
+        "step": 1
+      }
+    }
+  },
+  {
+    "test": "API Keys (Baseline)",
+    "success": true,
+    "response": {
+      "code": 0,
+      "reason": "",
+      "message": "success",
+      "data": {
+        "items": [],
+        "total": 0
+      }
+    }
+  }
+]
