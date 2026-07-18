@@ -13,14 +13,20 @@ Run: python3 alpha_hunter.py
 """
 
 import asyncio
-import aiohttp
 import json
 import time
 import os
 import sys
+import re
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from typing import Optional
+
+try:
+    from curl_cffi import requests as cffi_req
+except ImportError:
+    print("ERROR: curl_cffi required. Install with: pip install curl_cffi")
+    sys.exit(1)
 
 # ═══════════════════════════════════════════════════════════════
 # CONFIGURATION
@@ -145,10 +151,9 @@ class Signal:
 # ═══════════════════════════════════════════════════════════════
 
 class GmgnClient:
-    def __init__(self, session: aiohttp.ClientSession):
-        self.session = session
+    def __init__(self):
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
             'Accept': 'application/json',
             'Origin': 'https://gmgn.ai',
             'Referer': 'https://gmgn.ai/',
@@ -161,19 +166,19 @@ class GmgnClient:
         qs = "&".join(f"{k}={v}" for k, v in params.items())
         return f"{BASE_URL}{path}?{qs}"
 
-    async def get(self, path: str, params: dict = None) -> dict:
+    def get(self, path: str, params: dict = None) -> dict:
         url = self._build_url(path, params)
         try:
-            async with self.session.get(url, headers=self.headers, timeout=15) as r:
-                if r.status == 200:
-                    return await r.json()
-                return {"code": r.status, "message": f"HTTP {r.status}"}
+            r = cffi_req.get(url, headers=self.headers, impersonate='chrome', timeout=15)
+            if r.status_code == 200:
+                return r.json()
+            return {"code": r.status_code, "message": f"HTTP {r.status_code}"}
         except Exception as e:
             return {"code": -1, "message": str(e)}
 
-    async def get_1m_ranking(self, limit: int = 30) -> list:
+    def get_1m_ranking(self, limit: int = 30) -> list:
         """Get tokens with smart money activity in last 60 seconds."""
-        d = await self.get("/defi/quotation/v1/rank/sol/swaps/1m", {
+        d = self.get("/defi/quotation/v1/rank/sol/swaps/1m", {
             "orderby": "smart_degen_count",
             "direction": "desc",
             "limit": str(limit)
@@ -182,16 +187,16 @@ class GmgnClient:
             return d.get("data", {}).get("rank", [])
         return []
 
-    async def get_tg_messages(self, limit: int = 30) -> list:
+    def get_tg_messages(self, limit: int = 30) -> list:
         """Get latest TG alpha channel messages."""
-        d = await self.get("/vas/api/v1/tg/messages", {"limit": str(limit)})
+        d = self.get("/vas/api/v1/tg/messages", {"limit": str(limit)})
         if d.get("code") == 0:
             return d.get("data", {}).get("list", [])
         return []
 
-    async def get_smart_signals(self, signal_type: int = 12, limit: int = 20) -> list:
+    def get_smart_signals(self, signal_type: int = 12, limit: int = 20) -> list:
         """Get smart money signal feed. Types: 12=smart, 14=KOL, 16=whale."""
-        d = await self.get("/vas/api/v1/token-signal/rank", {
+        d = self.get("/vas/api/v1/token-signal/rank", {
             "chain": "sol",
             "limit": str(limit),
             "signal_type": str(signal_type)
@@ -200,9 +205,9 @@ class GmgnClient:
             return d.get("data", []) if isinstance(d.get("data"), list) else []
         return []
 
-    async def get_wallet_configs(self, address: str) -> dict:
-        """Read a wallet's trading configs (IDOR — works on any address)."""
-        d = await self.get("/wallet-api/v1/wallet/get_configs", {
+    def get_wallet_configs(self, address: str) -> dict:
+        """Read a wallet's trading configs."""
+        d = self.get("/wallet-api/v1/wallet/get_configs", {
             "chain": "sol",
             "address": address
         })
@@ -210,9 +215,9 @@ class GmgnClient:
             return d.get("data", {}).get("items", {})
         return {}
 
-    async def get_token_security(self, address: str) -> dict:
+    def get_token_security(self, address: str) -> dict:
         """Check if token is honeypot/rug."""
-        d = await self.get("/defi/quotation/v1/tokens/security", {
+        d = self.get("/defi/quotation/v1/tokens/security", {
             "chain": "sol",
             "address": address
         })
@@ -254,9 +259,9 @@ class SignalEngine:
             return False
         return True
 
-    async def scan_ranking(self) -> list[Signal]:
+    def scan_ranking(self) -> list[Signal]:
         """Scan 1-min ranking for NEW tokens appearing."""
-        ranking = await self.client.get_1m_ranking()
+        ranking = self.client.get_1m_ranking()
         current_addresses = set()
         new_signals = []
         now = time.time()
@@ -309,13 +314,12 @@ class SignalEngine:
         self.previous_ranking = current_addresses
         return new_signals
 
-    async def scan_tg_messages(self) -> list[Signal]:
+    def scan_tg_messages(self) -> list[Signal]:
         """Scan TG messages for fresh alpha calls."""
-        messages = await self.client.get_tg_messages()
+        messages = self.client.get_tg_messages()
         new_signals = []
         now = time.time()
 
-        import re
         for msg in messages:
             msg_time = msg.get("message_send_at", 0)
             age_sec = now - msg_time if msg_time else 9999
@@ -332,24 +336,21 @@ class SignalEngine:
                 continue
 
             # Extract contract addresses from message
-            # Solana addresses: base58, 32-44 chars, often ending in "pump"
             cas = re.findall(r'[A-HJ-NP-Za-km-z1-9]{32,44}pump', content)
             if not cas:
                 cas = re.findall(r'CA:\s*([A-HJ-NP-Za-km-z1-9]{32,44})', content)
             if not cas:
-                # Generic base58 that looks like a Solana address
                 cas = re.findall(r'\b([A-HJ-NP-Za-km-z1-9]{40,44})\b', content)
 
-            for ca in cas[:1]:  # only first CA per message
+            for ca in cas[:1]:
                 if ca in self.seen_tokens:
-                    # Already tracked — boost confidence
                     self.seen_tokens[ca].confidence = min(3, self.seen_tokens[ca].confidence + 1)
                     self.seen_tokens[ca].channel_name = channel
                     self.seen_tokens[ca].channel_winrate = winrate
                 else:
                     signal = Signal(
                         token_address=ca,
-                        symbol="",  # unknown from TG
+                        symbol="",
                         name="",
                         market_cap=0,
                         smart_count=0,
@@ -363,9 +364,9 @@ class SignalEngine:
 
         return new_signals
 
-    async def scan_smart_signals(self) -> list[Signal]:
+    def scan_smart_signals(self) -> list[Signal]:
         """Scan smart money signal feed."""
-        signals = await self.client.get_smart_signals(signal_type=12)
+        signals = self.client.get_smart_signals(signal_type=12)
         new_signals = []
         now = int(time.time())
 
@@ -374,7 +375,6 @@ class SignalEngine:
             trigger_at = s.get("trigger_at", 0)
             age_min = (now - trigger_at) / 60 if trigger_at else 9999
 
-            # Only fresh signals (< 30 min)
             if age_min > 30:
                 continue
 
@@ -410,7 +410,7 @@ class SignalEngine:
 # ALERTING
 # ═══════════════════════════════════════════════════════════════
 
-async def send_telegram_alert(signal: Signal, session: aiohttp.ClientSession):
+def send_telegram_alert(signal: Signal):
     """Send alert to Telegram."""
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         return
@@ -444,8 +444,7 @@ Source: {signal.source}"""
         "disable_web_page_preview": True
     }
     try:
-        async with session.post(url, json=payload, timeout=10) as r:
-            pass
+        cffi_req.post(url, json=payload, timeout=10)
     except:
         pass
 
@@ -499,95 +498,94 @@ async def main():
 ║          ALPHA HUNTER — Smart Money Signal Bot              ║
 ║                                                              ║
 ║  Sources: 1-min ranking + TG calls + Signal feed            ║
-║  Filters: mcap<$500K, smart>15, WR>50%                      ║
+║  Filters: mcap<$300K, smart>10, token<6h, WR>50%           ║
 ║  Speed: 10-second polling cycle                              ║
+║  Cloudflare bypass: curl_cffi (Chrome TLS fingerprint)      ║
 ║                                                              ║
 ║  Press Ctrl+C to stop                                        ║
 ╚══════════════════════════════════════════════════════════════╝
     """)
 
-    connector = aiohttp.TCPConnector(limit=10, ttl_dns_cache=300)
-    async with aiohttp.ClientSession(connector=connector) as session:
-        client = GmgnClient(session)
-        engine = SignalEngine(client)
+    client = GmgnClient()
+    engine = SignalEngine(client)
 
-        print(f"[*] Starting signal scan...")
-        print(f"[*] Filters: mcap ${MIN_MCAP:,}-${MAX_MCAP:,} | smart >= {MIN_SMART_COUNT} | TG WR >= {MIN_TG_WINRATE*100:.0f}%")
-        print(f"[*] Poll intervals: ranking={POLL_INTERVAL_RANKING}s, TG={POLL_INTERVAL_TG}s, signals={POLL_INTERVAL_SIGNALS}s")
-        if TELEGRAM_BOT_TOKEN:
-            print(f"[*] Telegram alerts: ENABLED")
-        else:
-            print(f"[*] Telegram alerts: DISABLED (set TG_BOT_TOKEN + TG_CHAT_ID)")
-        print()
+    print(f"[*] Starting signal scan...")
+    print(f"[*] Filters: mcap ${MIN_MCAP:,}-${MAX_MCAP:,} | smart >= {MIN_SMART_COUNT} | TG WR >= {MIN_TG_WINRATE*100:.0f}%")
+    print(f"[*] Runner filter: token < {MAX_TOKEN_AGE_FOR_RUNNER}min + smart >= {RUNNER_SMART_THRESHOLD} + mcap < $200K")
+    print(f"[*] Poll intervals: ranking={POLL_INTERVAL_RANKING}s, TG={POLL_INTERVAL_TG}s, signals={POLL_INTERVAL_SIGNALS}s")
+    if TELEGRAM_BOT_TOKEN:
+        print(f"[*] Telegram alerts: ENABLED")
+    else:
+        print(f"[*] Telegram alerts: DISABLED (set TG_BOT_TOKEN + TG_CHAT_ID)")
+    print()
 
-        last_ranking = 0
-        last_tg = 0
-        last_signals = 0
-        cycle = 0
+    last_ranking = 0
+    last_tg = 0
+    last_signals = 0
+    cycle = 0
 
-        try:
-            while True:
-                now = time.time()
-                cycle += 1
+    try:
+        while True:
+            now = time.time()
+            cycle += 1
 
-                # Scan ranking (fastest — every 10s)
-                if now - last_ranking >= POLL_INTERVAL_RANKING:
-                    new = await engine.scan_ranking()
-                    last_ranking = now
-                    if new:
-                        for s in new:
-                            print_alert(s)
-                            await send_telegram_alert(s, session)
-                            s.alerted = True
-
-                # Scan TG messages (every 20s)
-                if now - last_tg >= POLL_INTERVAL_TG:
-                    new = await engine.scan_tg_messages()
-                    last_tg = now
-                    # Check if TG call matches existing ranking signal (BOOST)
+            # Scan ranking (fastest — every 10s)
+            if now - last_ranking >= POLL_INTERVAL_RANKING:
+                new = engine.scan_ranking()
+                last_ranking = now
+                if new:
                     for s in new:
-                        if s.score() >= 30:
-                            print_alert(s)
-                            await send_telegram_alert(s, session)
-                            s.alerted = True
-
-                # Scan smart money signals (every 30s)
-                if now - last_signals >= POLL_INTERVAL_SIGNALS:
-                    new = await engine.scan_smart_signals()
-                    last_signals = now
-
-                # Check for cross-source confirmations
-                actionable = engine.get_actionable_signals()
-                for s in actionable:
-                    if s.confidence >= 2 and not s.alerted:
                         print_alert(s)
-                        await send_telegram_alert(s, session)
+                        send_telegram_alert(s)
                         s.alerted = True
 
-                # Status update every 30 cycles
-                if cycle % 30 == 0:
-                    ts = datetime.now(timezone.utc).strftime("%H:%M:%S")
-                    tracked = len(engine.seen_tokens)
-                    alerted = sum(1 for s in engine.seen_tokens.values() if s.alerted)
-                    print(f"  [{ts}] Tracking {tracked} tokens | Alerted {alerted} | Cycle {cycle}")
+            # Scan TG messages (every 20s)
+            if now - last_tg >= POLL_INTERVAL_TG:
+                new = engine.scan_tg_messages()
+                last_tg = now
+                for s in new:
+                    if s.score() >= 30:
+                        print_alert(s)
+                        send_telegram_alert(s)
+                        s.alerted = True
 
-                await asyncio.sleep(2)  # small sleep between checks
+            # Scan smart money signals (every 30s)
+            if now - last_signals >= POLL_INTERVAL_SIGNALS:
+                new = engine.scan_smart_signals()
+                last_signals = now
 
-        except KeyboardInterrupt:
-            print("\n\n[*] Shutting down...")
-            print(f"[*] Total tokens tracked: {len(engine.seen_tokens)}")
-            print(f"[*] Alerts sent: {sum(1 for s in engine.seen_tokens.values() if s.alerted)}")
+            # Check for cross-source confirmations
+            actionable = engine.get_actionable_signals()
+            for s in actionable:
+                if s.confidence >= 2 and not s.alerted:
+                    print_alert(s)
+                    send_telegram_alert(s)
+                    s.alerted = True
 
-            # Print summary of best signals found
-            best = sorted(engine.seen_tokens.values(), key=lambda s: s.score(), reverse=True)[:10]
-            if best:
-                print(f"\n  Top signals this session:")
-                for s in best:
-                    print(f"    Score:{s.score():3d} | ${s.symbol:10s} | mcap=${s.market_cap:>10,.0f} | smart={s.smart_count:3d} | {s.source}")
+            # Status update every 30 cycles
+            if cycle % 30 == 0:
+                ts = datetime.now(timezone.utc).strftime("%H:%M:%S")
+                tracked = len(engine.seen_tokens)
+                alerted = sum(1 for s in engine.seen_tokens.values() if s.alerted)
+                print(f"  [{ts}] Tracking {tracked} tokens | Alerted {alerted} | Cycle {cycle}")
+
+            time.sleep(2)  # small sleep between checks
+
+    except KeyboardInterrupt:
+        print("\n\n[*] Shutting down...")
+        print(f"[*] Total tokens tracked: {len(engine.seen_tokens)}")
+        print(f"[*] Alerts sent: {sum(1 for s in engine.seen_tokens.values() if s.alerted)}")
+
+        best = sorted(engine.seen_tokens.values(), key=lambda s: s.score(), reverse=True)[:10]
+        if best:
+            print(f"\n  Top signals this session:")
+            for s in best:
+                print(f"    Score:{s.score():3d} | ${s.symbol:10s} | mcap=${s.market_cap:>10,.0f} | smart={s.smart_count:3d} | {s.source}")
 
 
 if __name__ == "__main__":
     try:
+        import asyncio
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
