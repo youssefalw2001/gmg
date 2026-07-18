@@ -1,0 +1,436 @@
+{
+  "timestamp": "2026-07-14T20:53:51.143826+00:00",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "Endpoint works WITHOUT authentication! Register wallet \u2014 no auth",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/account/login_v3",
+      "detail": "Endpoint works WITHOUT authentication! Login init \u2014 session creation",
+      "data": "{'code': 0, 'message': 'success', 'data': {'data': {'captcha_data': '', 'key_type': 'score', 'site_key': '6Lf3pucqAAAAADbq3czpqDHRAD8j3kC-hcwwDG_T'}, 'done': False, 'require': ['verify_recaptcha'], 'session_id': 'f15f6d3c-f2ba-4e2b-b907-53d16bb851d1', 'step': 1}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/xapi/v1/bsc/flap/dividend_info",
+      "detail": "Endpoint works WITHOUT authentication! Dividend info \u2014 no auth",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'total_usdt_value': '2.316288', 'list': [{'tax_token': '0xd5c14c8e66aee71f28ed2c0ad2f8676bae867777', 'dividend_contract': '0xda7ce7c5c6eb08dde06bc4b50b58fe0c3281320c', 'amount': '8367009160985187', 'usdt_value': '1.431595', 'priced': True, 'claimable': True}, {'tax_token': '0x747f8232660303033b1366b8bdafceffdfb37777', 'dividend_contract': '0x944f2a672624dfeeafad393cf32979ba7d511896', 'amount': '1508484262133318', 'usdt_value': '0.823029', 'priced': True, 'claimable': True}, {'tax_token': '0x0991350369f34dd9e397c6e1c33a6dda37417777', 'dividend_contract': '0xc68a7e6ef0ce32874014ab4f61654550738d02f2', 'amount': '111753740250011', 'usdt_value': '0.060973', 'priced': True, 'claimable': True}, {'tax_token': '0x8edca5d5676d3413f58817a1d562dc825ead7777', 'dividend_contract': '0xd231c585a9436005ef5ee71ed5ea6e5d7d084725', 'amount': '729304195412', 'usdt_value': '0.000398', 'priced': True, 'claimable': True}, {'tax_token': '0x4d1a677d1425c0212b936fd7f442cb225b1b7777', 'dividend_contract': '0xe48e915a7d088a84b5ce4d6262b2925f04c18d95', 'amount': '536506070266', 'usdt_value': '0.000293', 'priced': True, 'claimable': True}]}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/xapi/v1/sol/claiming",
+      "detail": "Endpoint works WITHOUT authentication! Sol claiming \u2014 no auth",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'raw_tx': 'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMF3q36rSht/9pes1yochrhoKD/+fTGR2UgXU9brbmp+hV3VtRqb66qcU9cYWr7e7hze4mGbAytPSjjF0XSlOSt4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArPE26wH8HE6IPSPItYRKtZo39mrdV8XprDtT4FnTXGQBVuD2k2Zaz0TbFWi/F1uqUYnLl/XS/ztlXSu2/W0YsEGoQ2J9fmGfrG6OpgIK9MZ7d28OZB3jg9GNQzS4RBtMAQQFAAECAwQIFBZWe8Yc24Q=', 'last_valid_block_height': '410995094', 'recent_blockhash': '5RJKAcCsCpnXnM72aJYpxxMu3KfgZhfdYsQpwGGwrfX1'}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/vas/api/v1/search_v3?q=whale",
+      "detail": "Endpoint works WITHOUT authentication! Search \u2014 no auth",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'coins': [{'chain': 'bsc', 'address': '0x714347ae1d0a130dbc6ea75c7cac132f4e8aaaaa', 'name': 'Whale', 'symbol': 'Whale', 'trans_name': '', 'trans_symbol': '', 'trans_name_zhcn': '\u9cb8', 'trans_symbol_zhcn': '\u9cb8', 'remark_name': '', 'logo': 'https://gmgn.ai/external-res/cde3eae0055ca615cb813c7c737626fd_v2.webp', 'created_at': 1780436489, 'price': '0.51330202', 'price_24h': '0.5023741', 'volume_1h': 19, 'volume_24h': 20104, 'mcp': '10779342.42', 'liquidity': '195312.81198702138', 'follow_state': False, 'quote_address': '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', 'launch_quote_address': '', 'standard': 'erc20', 'hot_level': 0, 'swaps_5m': 0, 'swaps_1h': 7, 'swaps_6h': 52, 'swaps_24h': 147, 'is_show_alert': False, 'is_honeypot': False, 'renounced_freeze_account': None, 'buy_tax': '0.0099', 'sell_tax': '0.0099', 'token_link': {'address': '0x714347ae1d0a130dbc6ea75c7cac132f4e8aaaaa', 'gmgn': 'https://gmgn.ai/bsc/token/0x714347ae1d0a130dbc6ea75c7cac132f4e8aaaaa', 'geckoterminal': '', 'twitter_username': 'Whale_FunAAAA', 'website': 'https://whalefun.io/', 'telegram': 'https://t.me/WhalefunOfficial', 'bitbucket': '', 'discord': '', 'description': '', 'facebook': '', 'github': '', 'instagram': '', 'linkedin': '', 'medium': '', 'reddit': '', 'tiktok': '', 'youtube': '', 'verify_status': 0, 'fracaster': None}, 'dexscr_ad': 0, 'dexscr_update_link': 1, 'dexscr_boost_fee': 0, 'dexscr_trending_bar_ts': 0, 'cto_flag': 1, 'launchpad': '', 'launchpad_platform': 'pool_pancake', 'launchpad_status': 1, 'exchange': '0xca143ce32fe78f1f7019d7d551a6402fc5350c73', 'migrated_pool_exchange': '', 'twitter_change_flag': 0, 'twitter_rename_count': 2, 'creator': '0xbfdbab52f1af51f20ff011088901ae9e1636b626', 'progress': 0, 'is_og': False, 'holder_count': 24486, 'offchain': False, 'creation_tool': '', 'visiting_count': 0, 'ath_market_cap': '12094465.11', 'total_fee': '6.3470948157008124'}, {'chain': 'sol', 'address': '9ytd1V6MiDz6kt5V8qzWjdo3wYtEQ"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/vas/api/v1/tg/messages",
+      "detail": "Endpoint works WITHOUT authentication! TG messages \u2014 no auth",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'list': [{'channel_id': -1001922572023, 'message_id': 5273288704, 'message_send_at': 1784062303, 'channel_name': \"Kai's TON Calls\", 'channel_username': 'kaiscalls', 'channel_avatar': 'https://gmgn.ai/telegram/images/07bd024e737d7d58be2c2f13e0bd5e72.jpg', 'channel_url': 'https://t.me/kaiscalls/5029', 'channel_win_rate': '0.46', 'channel_members_count': 1292, 'content': 'aped a bag here 18k first stock on rh \\n\\nhttps://t.me/based_eth_bot?start=r_kaihails_b_0x69d743d88b0fcabd2173ca83b7f1a3d457e4a537', 'featured': 0, 'chain': 'robinhood', 'token_address': '0x69d743d88b0fcabd2173ca83b7f1a3d457e4a537', 'symbol': 'HMNY', 'icon': 'https://gmgn.ai/external-res/e8471a3cc4d69e1433eb91f616667a23_v2.webp', 'price': '0.000021641526', 'price_24h': '0.0000019696955', 'mcap': '0.310776105518649'}, {'channel_id': -1002083268934, 'message_id': 13774094336, 'message_send_at': 1784062098, 'channel_name': 'Alpha Gambles', 'channel_username': 'SolanaAlphaGambles', 'channel_avatar': 'https://gmgn.ai/telegram/images/cf4e29fd92e9be2c41510aea10a273e4.jpg', 'channel_url': 'https://t.me/SolanaAlphaGambles/13136', 'channel_win_rate': '0.42', 'channel_members_count': 3453, 'content': 'Literal fresh news 2 mins ago, Open AI companion/new speaker for the app\\n\\nTHIS THE OG.\\n\\nDLJjaZyANodEBkGMX7zNSqE9foq689vvJL5k25Rspump', 'featured': 0, 'chain': 'sol', 'token_address': 'DLJjaZyANodEBkGMX7zNSqE9foq689vvJL5k25Rspump', 'symbol': 'VISION', 'icon': 'https://gmgn.ai/external-res/8d23470f032462c9f0c8f8105f51f0a4_v2.webp', 'price': '0.0000032292691', 'price_24h': '0.00000239677', 'mcap': '0.008723994157857596'}, {'channel_id': -1001570797081, 'message_id': 2322595840, 'message_send_at': 1784062033, 'channel_name': 'RAIDMACHINE channel', 'channel_username': 'Raid_Machine', 'channel_avatar': 'https://gmgn.ai/telegram/images/42634989ab8618daa83d9acfb868ecea.jpg', 'channel_url': 'https://t.me/Raid_Machine/2215', 'channel_win_rate': '0.60', 'channel_mem"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/defi/quotation/v1/rank/sol/swaps/24h?orderby=profit&direction=desc&limit=10",
+      "detail": "Endpoint works WITHOUT authentication! Rankings \u2014 no auth",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'rank': [{'id': 0, 'chain': 'sol', 'address': 'F4GpAFr6vrxU3Y887F3XWkXRgybCVjZNk63m72f6pump', 'name': 'Trump Coin', 'symbol': 'TrumpCoin', 'logo': 'https://gmgn.ai/external-res/50b403d537956bb586f2ef8fd454ffe9_v2.webp', 'price': 0.000490567, 'price_change_percent': 11213.3, 'price_change_percent1m': -0.49166, 'price_change_percent5m': 8.25343, 'price_change_percent1h': 29.737, 'volume': 14731800, 'liquidity': 86414.4, 'market_cap': 483828, 'total_supply': 999977947, 'initial_liquidity': 24322.9, 'history_highest_market_cap': 3820886, 'swaps': 157383, 'buys': 89636, 'sells': 67747, 'holder_count': 7167, 'top_10_holder_rate': 0.1163, 'open_timestamp': 1784006805, 'creation_timestamp': 1784006805, 'pool_type': 0, 'pool_type_str': '', 'launchpad': 'pump', 'launchpad_platform': 'Pump.fun', 'launchpad_status': '1', 'exchange': 'pump_amm', 'twitter_username': 'https://x.com/i/communities/1942210764288274566', 'website': '', 'telegram': '', 'renounced_mint': 1, 'renounced_freeze_account': 1, 'burn_ratio': 0, 'burn_status': 'burn', 'dev_token_burn_amount': 0, 'dev_token_burn_ratio': 0, 'creator': '3fKF8cbyWKU56fpFkrQ1E6zJoAh4mqArdsPoUE6ycTKL', 'creator_token_status': 'creator_hold', 'creator_close': False, 'fund_from_address': 'HYSq1KBAvqWpEv1pCbV31muKM1za5A1WSHGdiVLUoNhb', 'hot_level': 0, 'is_show_alert': False, 'is_wash_trading': False, 'image_dup': '14', 'dexscr_ad': 0, 'dexscr_update_link': 1, 'cto_flag': 1, 'twitter_change_flag': 0, 'twitter_rename_count': 0, 'twitter_del_post_token_count': 30, 'twitter_create_token_count': 0, 'rat_trader_amount_rate': 0, 'bluechip_owner_percentage': 0.139684, 'rug_ratio': 0.22448979591836735, 'sniper_count': 15, 'smart_degen_count': 36, 'renowned_count': 21, 'bundler_rate': 0.3226, 'entrapment_ratio': 0.0661, 'dexscr_trending_bar': 0, 'dexscr_boost_fee': 99, 'is_og': False, 'gas_fee': 363.13443641101287, 'is_token_live': False, 'start_live_timestamp': 0, 'end_live_timestamp': 0, "
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/account/pubkey",
+      "detail": "Endpoint works WITHOUT authentication! RSA pubkey \u2014 no auth",
+      "data": "{'code': 0, 'message': 'success', 'data': {'key_id': 'v0', 'key_val': '-----BEGIN PUBLIC KEY-----\\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEApgbOcQKIwndN135IFfye\\ncehvZDCz09a+6f33tXhr7IUzquZZCsobIMNfCrv4kS5pJsiQV4KISwz7KL2fI5al\\nwzIHI245Gvlo/Pn+P3kEdujPo3R8Cm8Sae2aIxIfmFrIUkYjbrTCKQiUBgBLeZi1\\naPJErIoCHLXjLqY/Za1ouPWXQ6qjGb+4siqeMjEwqAoHRJAiTfpNoDVq5aYtRQKm\\nWk0ft2aDQoVa8PN9oORIcT9Mk9eL5rIz09wrf6S2wsUNCN3ego0u3EA3ehYBIBUQ\\nA2lMsLGdImNLQFVIX8xs5DQTDJl+l43R8idDVqty9U/6XwdjItGFkKS5rqldt353\\nbk87rQLyDbctwlurtjI1C0kRalNlyasdo8oIeX7mT8tTinDAhS5mkM6cqApwfYuc\\nKl3RNLnmU2TFYMmflAxzKH61tEFUGjT+BiT9KYEXVw4njVCSDtprn+8hocEdHdFw\\npKS5X90o3NhDLfNvez9zmQ9yCxRnEkJ+szlrVes5a40nzKbUKaO/xoHk56ikhpeH\\nKh//q5TJVyFQZ1cUjYHhQTOadU19IVyeCKcVo+1C6yZyWmr6YpWo6F8nPg1+BKdX\\neR+IrkuFBKod/k4Ye8tvOiboOslybb9sRFYnXs3L7ZduwhjsyRygu7UQ0J5/pbiA\\nbA1MyLs+WwuvwRnqfBptsrkCAwEAAQ==\\n-----END PUBLIC KEY-----\\n'}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "UNAUTH_ACCESS",
+      "endpoint": "/account/iploc",
+      "detail": "Endpoint works WITHOUT authentication! IP location \u2014 no auth",
+      "data": "{'code': 0, 'message': 'success', 'data': {'city_name': 'Ashburn', 'country_code': 'US', 'country_name': 'US', 'ip': '32.198.8.30', 'region_code': 'VA', 'region_name': 'Virginia', 'time': 1784062405.000863, 'vendor': 'cloudflare'}}"
+    },
+    {
+      "severity": "CRITICAL",
+      "category": "TG_AUTH_BYPASS",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "TG spoof bypasses auth! Register wallet with TG spoof",
+      "data": "{'code': 0, 'msg': 'success', 'data': {}}"
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: bypass_limits=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: trading_bot_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: daily_limit=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: min_trade_amount=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: two_factor_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: no_cooldown=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: max_slippage=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: priority_fee_mode=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: auto_collect=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: fee_discount=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: withdrawal_confirmation=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: vip_fee_rate=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: session_lock=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: grid_trading=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: debug_mode=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: 2fa_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: auto_buy=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: take_profit=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: device_whitelist=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: trailing_stop=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: api_key=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: ip_whitelist=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: unlimited_trades=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: batch_transfer=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: password_required=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: transfer_confirmation=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: admin_mode=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: passkey_required=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: gas_multiplier=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: webhook_url=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: api_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: sweep_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: stop_loss=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: internal_mode=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: copy_trade_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: referral_fee_share=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: max_trade_amount=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: dust_collection=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: callback_url=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: consolidate_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: distribute_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: dca_enabled=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: beta_features=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "NEW_CONFIG",
+      "endpoint": "/wallet-api/v1/wallet/get_configs",
+      "detail": "New config discovered: auto_sell=true on sol",
+      "data": null
+    },
+    {
+      "severity": "HIGH",
+      "category": "WALLET_CREATED",
+      "endpoint": "/tapi/v1/wallet/create",
+      "detail": "New wallet created (Full auth): 3d5izqgm2X5cfmV9DUD5PEsLhnXLT31ajoXGdX4Xi9CK",
+      "data": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'address': '3d5izqgm2X5cfmV9DUD5PEsLhnXLT31ajoXGdX4Xi9CK'}}"
+    }
+  ],
+  "accepted_configs": [
+    "two_factor_enabled",
+    "2fa_enabled",
+    "passkey_required",
+    "password_required",
+    "withdrawal_confirmation",
+    "transfer_confirmation",
+    "ip_whitelist",
+    "device_whitelist",
+    "session_lock",
+    "max_trade_amount",
+    "min_trade_amount",
+    "daily_limit",
+    "max_slippage",
+    "auto_sell",
+    "auto_buy",
+    "stop_loss",
+    "take_profit",
+    "trailing_stop",
+    "grid_trading",
+    "dca_enabled",
+    "consolidate_enabled",
+    "distribute_enabled",
+    "batch_transfer",
+    "auto_collect",
+    "sweep_enabled",
+    "dust_collection",
+    "fee_discount",
+    "vip_fee_rate",
+    "referral_fee_share",
+    "priority_fee_mode",
+    "gas_multiplier",
+    "api_enabled",
+    "api_key",
+    "webhook_url",
+    "callback_url",
+    "trading_bot_enabled",
+    "copy_trade_enabled",
+    "beta_features",
+    "internal_mode",
+    "debug_mode",
+    "admin_mode",
+    "bypass_limits",
+    "unlimited_trades",
+    "no_cooldown"
+  ]
+}

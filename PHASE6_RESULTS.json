@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-07-14T21:00:03.271879+00:00",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "category": "MASS_UNAUTH_HIJACK",
+      "endpoint": "/defi/quotation/v1/register_wallet",
+      "detail": "Mass referral hijack WITHOUT authentication! 20 wallets stolen",
+      "data": "['F4GpAFr6vrxU3Y887F3XWkXRgybCVjZNk63m72f6pump', '9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump', '9oDndFiC7RW42vZcmSzacTKMWE9kgeqnzwXDGLSkpump', '4ko5tSr5o3H4v1sFtjTSd9MPUW7yx5AFCpkNPoL6pump', 'G9VVud86SLgb7SnTqRKXJVUkzwLzCf4R89vknWVKbonk', '7V6Sk63y8Rr1MvcN5mYNp61wgFhy4EeQg5gUASk9pump', 'FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump', '5eiJm3oJRXcd3Aahg338P9DFULG8PPzmCUXGoFKpump', '48fHqiTPfQQeic1b2YvQuxaCRLckeDDKv33JSrikpump', '6fkhFEPL1KjipJkAuJg6gCQmHsnvwfhJXUyjV2Tspump']"
+    }
+  ],
+  "wallets_hijacked_unauth": [
+    "F4GpAFr6vrxU3Y887F3XWkXRgybCVjZNk63m72f6pump",
+    "9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump",
+    "9oDndFiC7RW42vZcmSzacTKMWE9kgeqnzwXDGLSkpump",
+    "4ko5tSr5o3H4v1sFtjTSd9MPUW7yx5AFCpkNPoL6pump",
+    "G9VVud86SLgb7SnTqRKXJVUkzwLzCf4R89vknWVKbonk",
+    "7V6Sk63y8Rr1MvcN5mYNp61wgFhy4EeQg5gUASk9pump",
+    "FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump",
+    "5eiJm3oJRXcd3Aahg338P9DFULG8PPzmCUXGoFKpump",
+    "48fHqiTPfQQeic1b2YvQuxaCRLckeDDKv33JSrikpump",
+    "6fkhFEPL1KjipJkAuJg6gCQmHsnvwfhJXUyjV2Tspump",
+    "0x0b6d8934fc8838b1027b510364a2087317bd4444",
+    "0x7a848a5a8169aa6a2f603d056a749f924f504444",
+    "0x69f89a2fa9e29953b21d08fc5ab5faa26aeb4444",
+    "0x2d049aaae3fe7f4b8cecb8921ab7253477884444",
+    "0x901feb0b49e41e07c3663291d5784e35a3224444",
+    "0xacd9555bed6eff8d10a4c6c8683030f75a024444",
+    "0xe92f7fe3eaf61df28b7b75f3faab199333c42302",
+    "0xa4390b901a63641c92327e5793b45fcb46954444",
+    "0x46f36abab185560e4cbbd29822aa12b3c9384444",
+    "0xcd1a9dbbc041386902c96717f0ce1d4a0e2e4444"
+  ],
+  "total_configs_accepted": 79
+}
