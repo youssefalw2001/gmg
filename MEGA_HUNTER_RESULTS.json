@@ -1,0 +1,14 @@
+{
+  "scan_timestamp": "2026-07-14T20:31:15.480682+00:00",
+  "total_requests": 162,
+  "findings": [
+    {
+      "severity": "HIGH",
+      "category": "SENSITIVE_DATA",
+      "endpoint": "/vas/api/v1/search_v3?q=admin",
+      "detail": "Sensitive key 'secret' in response",
+      "response_snippet": "{'code': 0, 'reason': '', 'message': 'success', 'data': {'coins': [{'chain': 'sol', 'address': '9bHvKHGrYQSTZ7VKmDe2DFn9MYaMAPxyLh3tPZbapump', 'name': 'admin', 'symbol': 'admin', 'trans_name': '', 'trans_symbol': '', 'trans_name_zhcn': '\u884c\u653f', 'trans_symbol_zhcn': '\u884c\u653f', 'remark_name': '', 'logo': 'https://gmgn.ai/external-res/df87316c1e1b5c6cc920b388724983bf_v2.webp', 'created_at': 1783994788, 'price': '0.0000021053731', 'price_24h': '', 'volume_1h': 0, 'volume_24h': 0, 'mcp': '2105.3731', 'liquid",
+      "timestamp": "2026-07-14T20:31:00.527063+00:00"
+    }
+  ]
+}
