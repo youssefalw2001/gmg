@@ -30,12 +30,14 @@ POLL_INTERVAL_RANKING = 10      # seconds between 1-min ranking polls
 POLL_INTERVAL_TG = 20           # seconds between TG message polls
 POLL_INTERVAL_SIGNALS = 30      # seconds between signal rank polls
 
-# FILTERS — tune these for your risk tolerance
-MIN_SMART_COUNT = 15            # minimum smart money wallets buying
-MAX_MCAP = 500_000              # maximum market cap (where 100x is possible)
-MIN_MCAP = 10_000               # minimum (below this = likely dead)
+# FILTERS — AGGRESSIVE: Only brand new tokens with real smart money
+MIN_SMART_COUNT = 10            # minimum smart money wallets buying
+MAX_MCAP = 300_000              # maximum market cap (where 100x is possible)
+MIN_MCAP = 5_000                # minimum (below this = likely dead/no liquidity)
 MIN_TG_WINRATE = 0.50           # minimum channel win rate to trust
-MAX_TOKEN_AGE_MINUTES = 120     # ignore tokens older than this
+MAX_TOKEN_AGE_MINUTES = 360     # 6 hours max — tokens older than this already pumped
+MAX_TOKEN_AGE_FOR_RUNNER = 120  # 2 hours — the SWEET SPOT for 50-100x runners
+RUNNER_SMART_THRESHOLD = 25     # if token < 2h old + this many smart wallets = 🚨
 
 # ALERTING
 TELEGRAM_BOT_TOKEN = os.getenv("TG_BOT_TOKEN", "")
@@ -69,10 +71,13 @@ class Signal:
     volume: float = 0.0
     confidence: int = 1      # 1-3 (higher = more sources confirm)
     timestamp: float = field(default_factory=time.time)
+    token_age_minutes: float = 9999  # how old the TOKEN is (not the signal)
+    platform: str = ""       # pump.fun, raydium, etc
     alerted: bool = False
 
     @property
     def age_minutes(self):
+        """How long ago we detected this signal."""
         return (time.time() - self.timestamp) / 60
 
     @property
@@ -87,25 +92,52 @@ class Signal:
         # Smart money count (max 30 points)
         s += min(self.smart_count / 10, 30)
         # Low mcap bonus (max 25 points)
-        if self.market_cap < 100_000:
+        if self.market_cap < 50_000:
             s += 25
+        elif self.market_cap < 100_000:
+            s += 22
         elif self.market_cap < 200_000:
-            s += 20
+            s += 18
+        elif self.market_cap < 300_000:
+            s += 12
         elif self.market_cap < 500_000:
-            s += 10
-        # Multi-source confirmation (max 20 points)
-        s += self.confidence * 7
-        # TG channel win rate (max 15 points)
-        if self.channel_winrate > 0.55:
-            s += 15
-        elif self.channel_winrate > 0.50:
-            s += 10
-        # Volume (max 10 points — active trading = good)
-        if self.volume > 5000:
-            s += 10
-        elif self.volume > 1000:
             s += 5
+        # Token age bonus — FRESHNESS IS KING (max 20 points)
+        if self.age_minutes < 30:
+            s += 20
+        elif self.age_minutes < 60:
+            s += 15
+        elif self.age_minutes < 120:
+            s += 10
+        elif self.age_minutes < 360:
+            s += 3
+        # Multi-source confirmation (max 15 points)
+        s += self.confidence * 5
+        # TG channel win rate (max 10 points)
+        if self.channel_winrate > 0.58:
+            s += 10
+        elif self.channel_winrate > 0.52:
+            s += 7
+        elif self.channel_winrate > 0.50:
+            s += 4
+        # Volume (max 10 points — active trading = good)
+        if self.volume > 10000:
+            s += 10
+        elif self.volume > 5000:
+            s += 7
+        elif self.volume > 1000:
+            s += 4
+        # Runner flag (bonus 15 if ultra fresh + high smart)
+        if self.is_runner:
+            s += 15
         return min(s, 100)
+
+    @property
+    def is_runner(self):
+        """Is this a potential 50-100x runner?"""
+        return (self.token_age_minutes < MAX_TOKEN_AGE_FOR_RUNNER and 
+                self.smart_count >= RUNNER_SMART_THRESHOLD and
+                0 < self.market_cap < 200_000)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -201,12 +233,24 @@ class SignalEngine:
         self.alerts_sent: set = set()                # don't double-alert
 
     def _is_valid_signal(self, mcap: float, smart: int, age_min: float) -> bool:
-        """Filter garbage signals."""
+        """Filter garbage signals. Only fresh tokens with real accumulation."""
         if mcap < MIN_MCAP or mcap > MAX_MCAP:
             return False
         if smart < MIN_SMART_COUNT:
             return False
         if age_min > MAX_TOKEN_AGE_MINUTES:
+            return False
+        return True
+
+    def _is_runner_candidate(self, mcap: float, smart: int, age_min: float) -> bool:
+        """The REAL 50-100x filter. Very strict."""
+        if age_min > MAX_TOKEN_AGE_FOR_RUNNER:
+            return False
+        if mcap > 200_000:
+            return False
+        if mcap < MIN_MCAP:
+            return False
+        if smart < RUNNER_SMART_THRESHOLD:
             return False
         return True
 
@@ -229,24 +273,28 @@ class SignalEngine:
             smart = int(token.get("smart_degen_count", 0) or 0)
             volume = float(token.get("volume", 0) or 0)
             created = int(token.get("created_timestamp", token.get("open_timestamp", 0)) or 0)
-            age_min = (now - created) / 60 if created else 9999
+            token_age_min = (now - created) / 60 if created else 9999
+            platform = token.get("launchpad", token.get("launchpad_platform", ""))
 
-            if not self._is_valid_signal(mcap, smart, age_min):
+            if not self._is_valid_signal(mcap, smart, token_age_min):
                 continue
 
-            # NEW token appearing = strongest signal
+            # NEW token appearing in ranking = strongest signal
             is_new = addr not in self.previous_ranking and addr not in self.seen_tokens
 
             if is_new:
+                is_runner = self._is_runner_candidate(mcap, smart, token_age_min)
                 signal = Signal(
                     token_address=addr,
                     symbol=symbol,
                     name=name,
                     market_cap=mcap,
                     smart_count=smart,
-                    source="ranking_new",
+                    source="🚨 RUNNER" if is_runner else "ranking_new",
                     volume=volume,
-                    confidence=2,  # new appearance = high confidence
+                    confidence=3 if is_runner else 2,
+                    token_age_minutes=token_age_min,
+                    platform=platform,
                 )
                 self.seen_tokens[addr] = signal
                 new_signals.append(signal)
@@ -407,7 +455,9 @@ def print_alert(signal: Signal):
     score = signal.score()
     now = datetime.now(timezone.utc).strftime("%H:%M:%S")
 
-    if score >= 70:
+    if signal.is_runner:
+        prefix = "\033[91m🚨🚨🚨 POTENTIAL RUNNER\033[0m"
+    elif score >= 70:
         prefix = "\033[91m🔥🔥🔥 HIGH CONFIDENCE\033[0m"
     elif score >= 50:
         prefix = "\033[93m🔥🔥 MEDIUM\033[0m"
@@ -418,18 +468,25 @@ def print_alert(signal: Signal):
     print(f"[{now}] {prefix} — Score: {score}/100")
     print(f"  Token: ${signal.symbol} ({signal.name})")
     print(f"  CA: {signal.token_address}")
-    print(f"  MCap: ${signal.market_cap:,.0f} | Smart: {signal.smart_count}")
-    print(f"  Potential: {signal.potential_x:.0f}x | Vol: ${signal.volume:,.0f}")
+    print(f"  MCap: ${signal.market_cap:,.0f} | Smart: {signal.smart_count} wallets")
+    print(f"  Token Age: {signal.token_age_minutes:.0f} min | Potential: {signal.potential_x:.0f}x")
+    print(f"  Volume: ${signal.volume:,.0f} | Platform: {signal.platform}")
     print(f"  Source: {signal.source}", end="")
     if signal.channel_name:
         print(f" | Channel: {signal.channel_name} (WR:{signal.channel_winrate*100:.0f}%)", end="")
     if signal.confidence >= 2:
         print(f" | ⚡CONFIRMED x{signal.confidence}", end="")
-    print(f"\n  Link: https://gmgn.ai/sol/token/{signal.token_address}")
+    print()
+    if signal.is_runner:
+        print(f"  \033[91m>>> TOKEN < 2h OLD + {signal.smart_count} SMART WALLETS + ${signal.market_cap:,.0f} MCAP <<<\033[0m")
+        print(f"  \033[91m>>> THIS IS THE PLAY — MOVE FAST <<<\033[0m")
+    print(f"  Link: https://gmgn.ai/sol/token/{signal.token_address}")
     print(f"{'='*60}")
 
     if ALERT_SOUND:
-        print("\a", end="")  # terminal bell
+        # Triple bell for runners
+        bells = 3 if signal.is_runner else 1
+        print("\a" * bells, end="")
 
 
 # ═══════════════════════════════════════════════════════════════
