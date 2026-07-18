@@ -1,0 +1,32 @@
+[
+  {
+    "severity": "CRITICAL",
+    "name": "set_configs WRITE IDOR",
+    "detail": "Wrote 'p1784405203' to FzFNsCyNj8mP1pE6WzgHfwV5BJDdF3CXxN2ZmmVX7jg8"
+  },
+  {
+    "severity": "HIGH",
+    "name": "limit_order/create OWN wallet",
+    "detail": "order=09507bef-d818-472d-add9-07c27b03a34c"
+  },
+  {
+    "severity": "HIGH",
+    "name": "sol/claiming IDOR",
+    "detail": "Got raw_tx for victim wallet (372 chars)"
+  },
+  {
+    "severity": "HIGH",
+    "name": "cashback/pending IDOR",
+    "detail": "user_id leaked: 3c2d9d0c-c0ab-4099-ba17-c537ccde09ed"
+  },
+  {
+    "severity": "HIGH",
+    "name": "generate_mfa_params bind_wallet",
+    "detail": "txn=b93dd2d0-3a4f-4c50-bcc4-6d3501689973 for VICTIM wallet"
+  },
+  {
+    "severity": "HIGH",
+    "name": "register_wallet referral hijack",
+    "detail": "Registered victim wallet under our referral"
+  }
+]
